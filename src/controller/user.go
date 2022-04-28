@@ -1,10 +1,10 @@
 package controller
 
 import (
-	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"github.com/CountryMarket/CountryMarket-backend/controller/param"
+	"github.com/CountryMarket/CountryMarket-backend/model"
 	"github.com/CountryMarket/CountryMarket-backend/util"
 	"github.com/CountryMarket/CountryMarket-backend/util/response"
 	"github.com/gin-gonic/gin"
@@ -45,8 +45,6 @@ func UserLogin(ctx *gin.Context) {
 	url := fmt.Sprintf("https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=%s",
 		p.Appid, p.Secret, p.JSCode, p.GrantType)
 
-	log.Print(url)
-
 	getString, err := util.HttpGet(url)
 	if err != nil {
 		response.Error(ctx, http.StatusInternalServerError, "cannot get openId", nil)
@@ -59,16 +57,40 @@ func UserLogin(ctx *gin.Context) {
 		return
 	}
 
-	log.Print(getJson)
-
 	if getJson.Errcode != 0 {
 		response.Error(ctx, http.StatusInternalServerError, getJson.Errmsg, nil)
 		return
 	} else {
-		encryptedOpenId := util.AesEncryptCBC([]byte(getJson.Openid), []byte(getJson.SessionKey))
+		encryptedOpenId, _, err := util.GenerateJWTToken(getJson.Openid, getJson.SessionKey)
+		if err != nil {
+			response.Error(ctx, http.StatusInternalServerError, "cannot generate token", nil)
+			return
+		}
 		response.Success(ctx, gin.H{
-			"openid": hex.EncodeToString(encryptedOpenId),
+			"token": encryptedOpenId,
 		})
 	}
 
+}
+
+type ReqTest struct { // for test
+	Openid string `form:"openid" json:"openid"`
+}
+
+func UserJWTTest(ctx *gin.Context) { // for test
+	req := ReqTest{}
+	if err := ctx.ShouldBindQuery(&req); err != nil {
+		response.Error(ctx, http.StatusBadRequest, "bad request", err)
+		return
+	}
+	openid, sessionKey := util.GetClaimsFromJWT(ctx)
+	testString, err := model.Get().Test(req.Openid)
+	if err != nil {
+		log.Print(err)
+	}
+	response.Success(ctx, gin.H{
+		"openid":     openid,
+		"sessionKey": sessionKey,
+		"test":       testString.TestString,
+	})
 }

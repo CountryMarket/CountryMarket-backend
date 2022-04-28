@@ -6,23 +6,26 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
 	"log"
+	"os"
 	"time"
 )
 
 type JwtClaims struct {
-	Id string `json:"id"`
+	OpenId     string `json:"openid"`
+	SessionKey string `json:"session_key"`
 	jwt.StandardClaims
 }
 
-func GenerateJWTToken(id string) (string, int64, error) {
+func GenerateJWTToken(openid, sessionKey string) (string, int64, error) {
 	claims := &JwtClaims{
-		id,
+		openid,
+		sessionKey,
 		jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(constant.JwtExpiresDuration).Unix(),
 		},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	t, err := token.SignedString([]byte("secret"))
+	t, err := token.SignedString([]byte(os.Getenv("APPSECRET")))
 	if err != nil {
 		return t, 0, err
 	}
@@ -30,7 +33,7 @@ func GenerateJWTToken(id string) (string, int64, error) {
 }
 func ParseJWTToken(tokenStr string) (*JwtClaims, error) {
 	token, err := jwt.ParseWithClaims(tokenStr, &JwtClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return []byte("secret"), nil
+		return []byte(os.Getenv("APPSECRET")), nil
 	})
 	if err != nil {
 		log.Println("token parse err: ", err)
@@ -41,8 +44,8 @@ func ParseJWTToken(tokenStr string) (*JwtClaims, error) {
 	}
 	return nil, errors.New("invalid token")
 }
-func GetIdFromJWT(ctx *gin.Context) string {
+func GetClaimsFromJWT(ctx *gin.Context) (string, string) {
 	t, _ := ctx.Get("claims")
 	claims := t.(*JwtClaims)
-	return claims.Id
+	return claims.OpenId, claims.SessionKey
 }

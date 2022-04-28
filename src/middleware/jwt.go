@@ -37,6 +37,7 @@ func JWTMiddleware() gin.HandlerFunc {
 
 		// 将当前请求的 claims 信息保存到请求的上下文 ctx 上
 		ctx.Set("claims", claims)
+		log.Print(claims)
 		ctx.Next() // 后续的处理函数可以用过 ctx.Get("claims") 来获取当前请求的用户信息
 
 	}
