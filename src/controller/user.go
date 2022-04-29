@@ -72,7 +72,12 @@ func UserLogin(ctx *gin.Context) {
 	}
 
 }
+func UserValidate(ctx *gin.Context) {
+	util.GetClaimsFromJWT(ctx)
+	response.Success(ctx, "ok")
+}
 
+// for test
 type ReqTest struct { // for test
 	Openid string `form:"openid" json:"openid"`
 }
