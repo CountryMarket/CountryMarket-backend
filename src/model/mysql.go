@@ -16,7 +16,18 @@ type Model interface {
 	Close() // 关闭数据库连接
 	Abort() // 终止操作，用于如事务的取消
 	// user
-	Test(string) (Data, error) // for test
+	UserRegisterOrDoNothing(openid, nickName, avatarUrl string) error
+	UserGetProfile(openid string) (User, error)
+	// shop
+	ShopAddProduct(product Product) error
+	ShopUpdateProduct(product Product, productId int) error
+	ShopGetProduct(productId int) (Product, error)
+	ShopGetOwnerProducts(userId, from, length int) ([]Product, error)
+	// cart
+	CartGetUserProducts(userId, from, length int) ([]CartAndProduct, error)
+	CartGetInCart(userId, productId int) (int, error)
+	CartAddProduct(userId, productId int) (int, error)
+	CartReduceProduct(userId, productId int) (int, error)
 }
 
 type model struct {

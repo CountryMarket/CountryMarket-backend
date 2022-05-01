@@ -8,7 +8,6 @@ import (
 	"github.com/CountryMarket/CountryMarket-backend/util"
 	"github.com/CountryMarket/CountryMarket-backend/util/response"
 	"github.com/gin-gonic/gin"
-	"log"
 	"net/http"
 	"os"
 )
@@ -47,25 +46,33 @@ func UserLogin(ctx *gin.Context) {
 
 	getString, err := util.HttpGet(url)
 	if err != nil {
-		response.Error(ctx, http.StatusInternalServerError, "cannot get openId", nil)
+		response.Error(ctx, http.StatusInternalServerError, "cannot get openId", err)
 		return
 	}
 
 	getJson := getResult{}
 	if err := json.Unmarshal([]byte(getString), &getJson); err != nil {
-		response.Error(ctx, http.StatusInternalServerError, "cannot unmarshal data", nil)
+		response.Error(ctx, http.StatusInternalServerError, "cannot unmarshal data", err)
 		return
 	}
 
 	if getJson.Errcode != 0 {
-		response.Error(ctx, http.StatusInternalServerError, getJson.Errmsg, nil)
+		response.Error(ctx, http.StatusInternalServerError, getJson.Errmsg, err)
 		return
 	} else {
 		encryptedOpenId, _, err := util.GenerateJWTToken(getJson.Openid, getJson.SessionKey)
 		if err != nil {
-			response.Error(ctx, http.StatusInternalServerError, "cannot generate token", nil)
+			response.Error(ctx, http.StatusInternalServerError, "cannot generate token", err)
 			return
 		}
+
+		// 如果用户第一次登录，则将用户数据插入数据库，否则什么都不做
+		err = model.Get().UserRegisterOrDoNothing(getJson.Openid, req.NickName, req.AvatarUrl)
+		if err != nil {
+			response.Error(ctx, http.StatusInternalServerError, "cannot check user database", err)
+			return
+		}
+
 		response.Success(ctx, gin.H{
 			"token": encryptedOpenId,
 		})
@@ -76,26 +83,17 @@ func UserValidate(ctx *gin.Context) {
 	util.GetClaimsFromJWT(ctx)
 	response.Success(ctx, "ok")
 }
-
-// for test
-type ReqTest struct { // for test
-	Openid string `form:"openid" json:"openid"`
-}
-
-func UserJWTTest(ctx *gin.Context) { // for test
-	req := ReqTest{}
-	if err := ctx.ShouldBindQuery(&req); err != nil {
-		response.Error(ctx, http.StatusBadRequest, "bad request", err)
+func UserGetProfile(ctx *gin.Context) {
+	openid, _ := util.GetClaimsFromJWT(ctx)
+	user, err := model.Get().UserGetProfile(openid)
+	if err != nil {
+		response.Error(ctx, http.StatusInternalServerError, "cannot get user database", err)
 		return
 	}
-	openid, sessionKey := util.GetClaimsFromJWT(ctx)
-	testString, err := model.Get().Test(req.Openid)
-	if err != nil {
-		log.Print(err)
-	}
-	response.Success(ctx, gin.H{
-		"openid":     openid,
-		"sessionKey": sessionKey,
-		"test":       testString.TestString,
+	response.Success(ctx, param.ResUserGetProfile{
+		NickName:    user.NickName,
+		AvatarUrl:   user.AvatarUrl,
+		PhoneNumber: user.PhoneNumber,
+		Permission:  user.Permission,
 	})
 }

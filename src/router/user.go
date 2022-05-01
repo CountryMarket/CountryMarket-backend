@@ -9,6 +9,5 @@ import (
 func InitUserRouter(g *gin.RouterGroup) {
 	g.GET("/code", controller.UserLogin)
 	g.GET("/validate", middleware.JWTMiddleware(), controller.UserValidate)
-
-	g.GET("/test", middleware.JWTMiddleware(), controller.UserJWTTest) // for test
+	g.GET("/profile", middleware.JWTMiddleware(), controller.UserGetProfile)
 }
