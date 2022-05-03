@@ -13,4 +13,6 @@ func InitRouter(g *gin.RouterGroup) {
 	InitCartRouter(rCart)
 	rAddress := g.Group("/address")
 	InitAddressRouter(rAddress)
+	rProduct := g.Group("/product")
+	InitProductRouter(rProduct)
 }

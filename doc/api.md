@@ -91,7 +91,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 
 ```json
 {
-    "user_id": 3, // 要修改的用户的 ID
+    "userId": 3, // 要修改的用户的 ID
     "permission": 1 // 修改为的权限
 }
 ```
@@ -187,7 +187,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 
 响应：无
 
-## *更新一个商品 PUT /shop/updateProduct
+## *更新一个商品 POST /shop/updateProduct
 
 (需要是商户账号，即permission有2，且更新的商品是申请用户的)
 
@@ -406,23 +406,110 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 
 # 商品 API
 
-## 查询 Tab List GET /shop/tabList
+## 查询 Tab List GET /product/tabList
 
-## 查询一个 Tab 的商品 GET /shop/tabProducts
+请求：无
 
-## **修改一个 Tab POST /shop/tabModify
+响应：
 
-## **增加一个 Tab POST /shop/tabAdd
+```json
+{
+    "tabs": [
+        {
+            "tabId": 0, // Tab Id
+            "name": "xxx" // Tab 名称
+        },
+        {
+            "tabId": 1, // Tab Id
+            "name": "xxx" // Tab 名称            
+        },
+        {
+            "tabId": 3, // Tab Id
+            "name": "xxx" // Tab 名称            
+        },
+    ]
+}
+```
 
-## **隐藏 / 显示一个 Tab POST /shop/tabXor
+## 查询一个 Tab 的商品 GET /product/tabProducts
 
-## **修改首页推荐商品列表 POST /shop/modifyHomeTab
+请求：
 
-## **修改首页推荐图片个数 POST /shop/modifyHomePicture
+```json
+{
+    "tabId": 3 // 要查询的 tab 的 tab id
+}
+```
 
-## 查询首页推荐图片个数 GET /shop/homePicture
+响应：
 
-## 查询首页推荐商品列表 GET /shop/homeTab
+```json
+{
+    "products": [
+        {
+            "id": 2, // 商品 id
+            "price": 233, // 价格
+            "title": "过期猪小排100g", // 标题
+            "description": "过期的猪小排。", // 描述
+            "ownerUserId": 2 // 谁的 product，为 user id
+        },
+        {
+            "id": 3, // 商品 id
+            "price": 333, // 价格
+            "title": "过期牛小排100g", // 标题
+            "description": "过期的牛小排。", // 描述
+            "ownerUserId": 2 // 谁的 product，为 user id
+        }
+    ]
+}
+```
+
+## **修改一个 Tab POST /product/tabModify
+
+请求：
+
+```json
+{
+    "tabId": 4, // 要修改的 tabId
+    "name": "hh", // 修改后的名字
+    "products": [1, 2, 4, 8] // 修改后 Tab 包含的商品
+}
+```
+
+响应：无
+
+## **增加一个 Tab POST /product/tabAdd
+
+请求：
+
+```json
+{
+    "name": "hh", // 修改后的名字
+    "products": [1, 3, 4, 6] // Tab 包含的商品
+}
+```
+
+响应：无
+
+## **删除一个 Tab POST /product/tabDelete
+
+请求：
+
+```json
+{
+    "tabId": 4 // 要删除的 tabId
+}
+```
+
+响应：无
+
+## **修改首页推荐商品列表 POST /product/modifyHomeTab
+
+## **修改首页推荐图片个数 POST /product/modifyHomePicture
+
+## 查询首页推荐图片个数 GET /product/homePicture
+
+## 查询首页推荐商品列表 GET /product/homeTab
 
 
 # 订单 API

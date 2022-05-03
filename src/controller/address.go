@@ -11,7 +11,7 @@ import (
 
 func AddressAddAddress(ctx *gin.Context) {
 	req := param.ReqAddressAddAddress{}
-	if err := ctx.ShouldBindQuery(&req); err != nil {
+	if err := ctx.ShouldBindJSON(&req); err != nil {
 		response.Error(ctx, http.StatusBadRequest, "bad request", err)
 		return
 	}
@@ -37,7 +37,7 @@ func AddressAddAddress(ctx *gin.Context) {
 }
 func AddressModifyAddress(ctx *gin.Context) {
 	req := param.ReqAddressModifyAddress{}
-	if err := ctx.ShouldBindQuery(&req); err != nil {
+	if err := ctx.ShouldBindJSON(&req); err != nil {
 		response.Error(ctx, http.StatusBadRequest, "bad request", err)
 		return
 	}
@@ -73,7 +73,7 @@ func AddressModifyAddress(ctx *gin.Context) {
 }
 func AddressDeleteAddress(ctx *gin.Context) {
 	req := param.ReqAddressDeleteAddress{}
-	if err := ctx.ShouldBindQuery(&req); err != nil {
+	if err := ctx.ShouldBindJSON(&req); err != nil {
 		response.Error(ctx, http.StatusBadRequest, "bad request", err)
 		return
 	}

@@ -8,7 +8,7 @@ import (
 
 func InitShopRouter(g *gin.RouterGroup) {
 	g.POST("/addProduct", middleware.JWTMiddleware(), controller.ShopAddProduct)
-	g.PUT("/updateProduct", middleware.JWTMiddleware(), controller.ShopUpdateProduct)
+	g.POST("/updateProduct", middleware.JWTMiddleware(), controller.ShopUpdateProduct)
 
 	g.GET("/product", controller.ShopGetProduct)
 	g.GET("/ownerProducts", middleware.JWTMiddleware(), controller.ShopGetOwnerProducts)

@@ -5,11 +5,11 @@ type ReqCartGetUserProducts struct {
 	Length int `form:"length" json:"length" binding:"required"`
 }
 type ReqCartProductId struct {
-	ProductId int `form:"productId" json:"product_id" binding:"required"`
+	ProductId int `form:"productId" json:"productId" binding:"required"`
 }
 type ReqCartModifyProduct struct {
-	ProductId   int `form:"productId" json:"product_id" binding:"required"`
-	ModifyCount int `form:"modifyCount" json:"modify_count"`
+	ProductId   int `form:"productId" json:"productId" binding:"required"`
+	ModifyCount int `form:"modifyCount" json:"modifyCount"`
 }
 
 type ResCartGetInCart struct {

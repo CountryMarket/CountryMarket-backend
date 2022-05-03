@@ -78,7 +78,7 @@ func CartGetInCart(ctx *gin.Context) {
 }
 func CartAddProduct(ctx *gin.Context) {
 	req := param.ReqCartProductId{}
-	if err := ctx.ShouldBindQuery(&req); err != nil {
+	if err := ctx.ShouldBindJSON(&req); err != nil {
 		response.Error(ctx, http.StatusBadRequest, "bad request", err)
 		return
 	}
@@ -102,7 +102,7 @@ func CartAddProduct(ctx *gin.Context) {
 }
 func CartReduceProduct(ctx *gin.Context) {
 	req := param.ReqCartProductId{}
-	if err := ctx.ShouldBindQuery(&req); err != nil {
+	if err := ctx.ShouldBindJSON(&req); err != nil {
 		response.Error(ctx, http.StatusBadRequest, "bad request", err)
 		return
 	}
@@ -126,7 +126,7 @@ func CartReduceProduct(ctx *gin.Context) {
 }
 func CartModifyProduct(ctx *gin.Context) {
 	req := param.ReqCartModifyProduct{}
-	if err := ctx.ShouldBindQuery(&req); err != nil {
+	if err := ctx.ShouldBindJSON(&req); err != nil {
 		response.Error(ctx, http.StatusBadRequest, "bad request", err)
 		return
 	}

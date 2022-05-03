@@ -36,6 +36,12 @@ type Model interface {
 	CartAddProduct(userId, productId int) (int, error)
 	CartReduceProduct(userId, productId int) (int, error)
 	CartModifyProduct(userId, productId, modifyCount int) (int, error)
+	// product
+	ProductGetTabList() ([]int, []string, error)
+	ProductGetTabProducts(tabId int) ([]Product, error)
+	ProductModifyTabProducts(tabId int, productTab ProductTab) error
+	ProductAddTabProducts(productTab ProductTab) error
+	ProductDeleteTabProducts(tabId int) error
 }
 
 type model struct {

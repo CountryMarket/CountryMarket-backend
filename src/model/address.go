@@ -24,7 +24,7 @@ func (m *model) AddressAddAddress(address Address) error {
 	if err != nil {
 		return err
 	}
-	if count >= 5 {
+	if count >= 100 {
 		return errors.New("more than 5 addresses")
 	}
 	return m.db.Model(&Address{}).Create(&address).Error

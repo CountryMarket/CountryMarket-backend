@@ -11,7 +11,7 @@ import (
 
 func ShopAddProduct(ctx *gin.Context) {
 	req := param.ReqShopAddProduct{}
-	if err := ctx.ShouldBindQuery(&req); err != nil {
+	if err := ctx.ShouldBindJSON(&req); err != nil {
 		response.Error(ctx, http.StatusBadRequest, "bad request", err)
 		return
 	}
@@ -44,7 +44,7 @@ func ShopAddProduct(ctx *gin.Context) {
 }
 func ShopUpdateProduct(ctx *gin.Context) {
 	req := param.ReqShopUpdateProduct{}
-	if err := ctx.ShouldBindQuery(&req); err != nil {
+	if err := ctx.ShouldBindJSON(&req); err != nil {
 		response.Error(ctx, http.StatusBadRequest, "bad request", err)
 		return
 	}

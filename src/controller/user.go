@@ -99,7 +99,7 @@ func UserGetProfile(ctx *gin.Context) {
 }
 func UserModifyPermission(ctx *gin.Context) { // root 操作
 	req := param.ReqModifyPermission{}
-	if err := ctx.ShouldBindQuery(&req); err != nil {
+	if err := ctx.ShouldBindJSON(&req); err != nil {
 		response.Error(ctx, http.StatusBadRequest, "bad request", err)
 		return
 	}

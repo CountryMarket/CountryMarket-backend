@@ -3,16 +3,16 @@ package param
 type ReqAddressAddAddress struct {
 	Name        string `form:"name" json:"name" binding:"required"`
 	Address     string `form:"address" json:"address" binding:"required"`
-	PhoneNumber string `form:"phoneNumber" json:"phone_number" binding:"required"`
+	PhoneNumber string `form:"phoneNumber" json:"phoneNumber" binding:"required"`
 }
 type ReqAddressModifyAddress struct {
-	AddressId   int    `form:"addressId" json:"address_id" binding:"required"`
+	AddressId   int    `form:"addressId" json:"addressId" binding:"required"`
 	Name        string `form:"name" json:"name" binding:"required"`
 	Address     string `form:"address" json:"address" binding:"required"`
-	PhoneNumber string `form:"phoneNumber" json:"phone_number" binding:"required"`
+	PhoneNumber string `form:"phoneNumber" json:"phoneNumber" binding:"required"`
 }
 type ReqAddressDeleteAddress struct {
-	AddressId int `form:"addressId" json:"address_id" binding:"required"`
+	AddressId int `form:"addressId" json:"addressId" binding:"required"`
 }
 
 type AddressItem struct {
