@@ -88,3 +88,36 @@ func (m *model) CartReduceProduct(userId, productId int) (int, error) {
 	}
 	return cart.ProductCount, err
 }
+func (m *model) CartModifyProduct(userId, productId, modifyCount int) (int, error) {
+	err := m.db.Transaction(func(tx *gorm.DB) error {
+		if modifyCount < 0 {
+			return nil
+		}
+		var cart Cart
+		result := m.db.Model(&Cart{}).Where("owner_user_id = ? AND product_id = ?", userId, productId).Take(&cart)
+		err := result.Error
+		if err != nil && err != gorm.ErrRecordNotFound {
+			return err
+		}
+		if err == gorm.ErrRecordNotFound { // 没有找到记录，创建
+			err = m.db.Model(&Cart{}).Create(&Cart{
+				OwnerUserId:  userId,
+				ProductId:    productId,
+				ProductCount: modifyCount,
+			}).Error
+			return err
+		} else {
+			err = result.Update("product_count", modifyCount).Error
+			return err
+		}
+	})
+	if err != nil {
+		return 0, err
+	}
+	var cart Cart
+	err = m.db.Model(&Cart{}).Where("owner_user_id = ? AND product_id = ?", userId, productId).Take(&cart).Error
+	if err != nil {
+		return 0, err
+	}
+	return cart.ProductCount, err
+}

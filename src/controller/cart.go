@@ -124,3 +124,27 @@ func CartReduceProduct(ctx *gin.Context) {
 		"count": count,
 	})
 }
+func CartModifyProduct(ctx *gin.Context) {
+	req := param.ReqCartModifyProduct{}
+	if err := ctx.ShouldBindQuery(&req); err != nil {
+		response.Error(ctx, http.StatusBadRequest, "bad request", err)
+		return
+	}
+	openid, _ := util.GetClaimsFromJWT(ctx)
+
+	profile, err := model.Get().UserGetProfile(openid)
+	if err != nil {
+		response.Error(ctx, http.StatusInternalServerError, "cannot get profile", err)
+		return
+	}
+
+	count, err := model.Get().CartModifyProduct(int(profile.ID), req.ProductId, req.ModifyCount)
+	if err != nil {
+		response.Error(ctx, http.StatusInternalServerError, "cannot add product or get count", err)
+		return
+	}
+
+	response.Success(ctx, gin.H{
+		"count": count,
+	})
+}

@@ -83,6 +83,89 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 }
 ```
 
+## **修改用户权限 POST /user/modifyPermission
+
+(仅 Root)
+
+请求：
+
+```json
+{
+    "user_id": 3, // 要修改的用户的 ID
+    "permission": 1 // 修改为的权限
+}
+```
+
+响应：无
+
+# 地址 API
+
+## *新增收货信息 POST /address/addAddress
+
+请求：
+
+```json
+{
+	"name": "", // 姓名
+    "address": "", // 地址
+    "phoneNumber": "" // 电话号码
+}
+```
+
+响应：无
+
+## *修改收货信息 POST /address/modifyAddress
+
+请求：
+
+```json
+{
+    "addressId" : 3, // 要修改的 收货信息 Id
+	"name": "", // 姓名
+    "address": "", // 地址
+    "phoneNumber": "" // 电话号码
+}
+```
+
+响应：无
+
+## *删除收货信息 POST /address/deleteAddress
+
+请求：
+
+```json
+{
+    "addressId": 3 // 要删除的 收货信息 Id
+}
+```
+
+响应：无
+
+## *查询用户收货信息列表 GET /address/address
+
+请求：无
+
+响应：
+
+```json
+{
+    "address": [
+        {
+            "addressId" : 2, // 要修改的 收货信息 Id
+            "name": "", // 姓名
+            "address": "", // 地址
+            "phoneNumber": "" // 电话号码
+        },
+        {
+            "addressId" : 4, // 要修改的 收货信息 Id
+            "name": "", // 姓名
+            "address": "", // 地址
+            "phoneNumber": "" // 电话号码
+        }
+    ]
+}
+```
+
 # 商户 API
 
 每个 product 有一个自增 ID
@@ -160,7 +243,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 
 ```json
 {
-    "products": [
+    "Products": [
         {
             "price": 233, // 价格
             "title": "过期猪小排100g", // 标题
@@ -198,7 +281,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 
 ```json
 {
-    "products": [
+    "Products": [
         {
             "id": 3, // 商品 id
             "count": 3, // 加入的数量
@@ -242,7 +325,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 
 ## *增加购物车中的商品数量 POST /cart/addProduct
 
-给定商品 id，增加其商品数量
+给出商品 id，增加其商品数量
+
+请求：
 
 ```json
 {
@@ -262,6 +347,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 
 给定购物车商品 id，减少其商品数量
 
+请求：
+
 ```json
 {
     "productId": 3 // 商品 id
@@ -276,9 +363,32 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 }
 ```
 
+## *修改购物车中的商品数量 POST /cart/modifyProduct
+
+给出商品 id，修改其商品数量
+
+请求：
+
+```json
+{
+    "productId": 3, // 商品 id
+    "modifyCount": 4 // 修改到多少
+}
+```
+
+响应：
+
+```json
+{
+    "count": 4 // 当前此商品加入的数量
+}
+```
+
 ## *结算购物车中的部分商品 POST /cart/buyProduct
 
 给出商品 id，结算并生成订单
+
+请求：
 
 ```json
 {
@@ -293,5 +403,26 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
     "idOrder": 3 // 生成的订单 id
 }
 ```
+
+# 商品 API
+
+## 查询 Tab List GET /shop/tabList
+
+## 查询一个 Tab 的商品 GET /shop/tabProducts
+
+## **修改一个 Tab POST /shop/tabModify
+
+## **增加一个 Tab POST /shop/tabAdd
+
+## **隐藏 / 显示一个 Tab POST /shop/tabXor
+
+## **修改首页推荐商品列表 POST /shop/modifyHomeTab
+
+## **修改首页推荐图片个数 POST /shop/modifyHomePicture
+
+## 查询首页推荐图片个数 GET /shop/homePicture
+
+## 查询首页推荐商品列表 GET /shop/homeTab
+
 
 # 订单 API

@@ -46,3 +46,7 @@ func (m *model) UserGetProfile(openid string) (User, error) {
 	}
 	return user, nil
 }
+func (m *model) UserModifyPermission(userId, permission int) error {
+	err := m.db.Model(&User{}).Where("id = ?", userId).Update("permission", permission).Error
+	return err
+}

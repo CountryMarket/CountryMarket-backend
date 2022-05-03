@@ -18,6 +18,13 @@ type Model interface {
 	// user
 	UserRegisterOrDoNothing(openid, nickName, avatarUrl string) error
 	UserGetProfile(openid string) (User, error)
+	UserModifyPermission(userId, permission int) error
+	// address
+	AddressGetOneAddress(addressId int) (Address, error)
+	AddressAddAddress(address Address) error
+	AddressModifyAddress(addressId int, address Address) error
+	AddressDeleteAddress(addressId int) error
+	AddressGetAddress(userId int) ([]Address, error)
 	// shop
 	ShopAddProduct(product Product) error
 	ShopUpdateProduct(product Product, productId int) error
@@ -28,6 +35,7 @@ type Model interface {
 	CartGetInCart(userId, productId int) (int, error)
 	CartAddProduct(userId, productId int) (int, error)
 	CartReduceProduct(userId, productId int) (int, error)
+	CartModifyProduct(userId, productId, modifyCount int) (int, error)
 }
 
 type model struct {

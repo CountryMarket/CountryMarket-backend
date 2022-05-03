@@ -12,4 +12,5 @@ func InitCartRouter(g *gin.RouterGroup) {
 
 	g.POST("/addProduct", middleware.JWTMiddleware(), controller.CartAddProduct)
 	g.POST("/reduceProduct", middleware.JWTMiddleware(), controller.CartReduceProduct)
+	g.POST("/modifyProduct", middleware.JWTMiddleware(), controller.CartModifyProduct)
 }

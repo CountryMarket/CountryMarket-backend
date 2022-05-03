@@ -3,5 +3,5 @@ package constant
 import "time"
 
 const (
-	JwtExpiresDuration = time.Minute * 20
+	JwtExpiresDuration = time.Hour * 48
 )

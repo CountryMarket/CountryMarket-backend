@@ -7,6 +7,10 @@ type ReqCartGetUserProducts struct {
 type ReqCartProductId struct {
 	ProductId int `form:"productId" json:"product_id" binding:"required"`
 }
+type ReqCartModifyProduct struct {
+	ProductId   int `form:"productId" json:"product_id" binding:"required"`
+	ModifyCount int `form:"modifyCount" json:"modify_count"`
+}
 
 type ResCartGetInCart struct {
 	InCart bool

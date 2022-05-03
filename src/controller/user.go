@@ -85,15 +85,42 @@ func UserValidate(ctx *gin.Context) {
 }
 func UserGetProfile(ctx *gin.Context) {
 	openid, _ := util.GetClaimsFromJWT(ctx)
-	user, err := model.Get().UserGetProfile(openid)
+	profile, err := model.Get().UserGetProfile(openid)
 	if err != nil {
 		response.Error(ctx, http.StatusInternalServerError, "cannot get user database", err)
 		return
 	}
 	response.Success(ctx, param.ResUserGetProfile{
-		NickName:    user.NickName,
-		AvatarUrl:   user.AvatarUrl,
-		PhoneNumber: user.PhoneNumber,
-		Permission:  user.Permission,
+		NickName:    profile.NickName,
+		AvatarUrl:   profile.AvatarUrl,
+		PhoneNumber: profile.PhoneNumber,
+		Permission:  profile.Permission,
 	})
+}
+func UserModifyPermission(ctx *gin.Context) { // root 操作
+	req := param.ReqModifyPermission{}
+	if err := ctx.ShouldBindQuery(&req); err != nil {
+		response.Error(ctx, http.StatusBadRequest, "bad request", err)
+		return
+	}
+
+	openid, _ := util.GetClaimsFromJWT(ctx)
+	profile, err := model.Get().UserGetProfile(openid)
+	if err != nil {
+		response.Error(ctx, http.StatusInternalServerError, "cannot get user database", err)
+		return
+	}
+
+	if (profile.Permission & 4) == 0 { // root 操作
+		response.Error(ctx, http.StatusForbidden, "not a root", err)
+		return
+	}
+
+	err = model.Get().UserModifyPermission(req.UserId, req.Permission)
+	if err != nil {
+		response.Error(ctx, http.StatusInternalServerError, "cannot modify user permission", err)
+		return
+	}
+
+	response.Success(ctx, "ok")
 }
