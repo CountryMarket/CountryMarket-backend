@@ -132,3 +132,44 @@ func AddressGetAddress(ctx *gin.Context) {
 		Address: result,
 	})
 }
+func AddressGetDefaultAddress(ctx *gin.Context) {
+	openid, _ := util.GetClaimsFromJWT(ctx)
+
+	profile, err := model.Get().UserGetProfile(openid)
+	if err != nil {
+		response.Error(ctx, http.StatusInternalServerError, "cannot get profile", err)
+		return
+	}
+
+	addressId, err := model.Get().AddressGetDefaultAddress(int(profile.ID))
+	if err != nil {
+		response.Error(ctx, http.StatusInternalServerError, "cannot get address id", err)
+		return
+	}
+
+	response.Success(ctx, gin.H{
+		"address_id": addressId,
+	})
+}
+func AddressModifyDefaultAddress(ctx *gin.Context) {
+	req := param.ReqAddressModifyDefaultAddress{}
+	if err := ctx.ShouldBindJSON(&req); err != nil {
+		response.Error(ctx, http.StatusBadRequest, "bad request", err)
+		return
+	}
+	openid, _ := util.GetClaimsFromJWT(ctx)
+
+	profile, err := model.Get().UserGetProfile(openid)
+	if err != nil {
+		response.Error(ctx, http.StatusInternalServerError, "cannot get profile", err)
+		return
+	}
+
+	err = model.Get().AddressModifyDefaultAddress(int(profile.ID), req.AddressId)
+	if err != nil {
+		response.Error(ctx, http.StatusInternalServerError, "cannot modify address", err)
+		return
+	}
+
+	response.Success(ctx, "ok")
+}

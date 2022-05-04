@@ -11,4 +11,6 @@ func InitAddressRouter(g *gin.RouterGroup) {
 	g.POST("/modifyAddress", middleware.JWTMiddleware(), controller.AddressModifyAddress)
 	g.POST("/deleteAddress", middleware.JWTMiddleware(), controller.AddressDeleteAddress)
 	g.GET("/address", middleware.JWTMiddleware(), controller.AddressGetAddress)
+	g.GET("/default", middleware.JWTMiddleware(), controller.AddressGetDefaultAddress)
+	g.POST("/modifyDefault", middleware.JWTMiddleware(), controller.AddressModifyDefaultAddress)
 }

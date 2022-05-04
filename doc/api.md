@@ -166,6 +166,30 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 }
 ```
 
+## *修改用户默认收货信息 POST /address/modifyDefault
+
+请求：
+
+```json
+{
+    "address_id": 4 // 需要改到的地址 Id
+}
+```
+
+响应：无
+
+## *获取用户默认收货信息 GET /address/default
+
+请求：无
+
+响应：
+
+```json
+{
+    "address_id": 4 // 默认地址 Id
+}
+```
+
 # 商户 API
 
 每个 product 有一个自增 ID
@@ -384,26 +408,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 }
 ```
 
-## *结算购物车中的部分商品 POST /cart/buyProduct
-
-给出商品 id，结算并生成订单
-
-请求：
-
-```json
-{
-    "productIds": [1, 3, 5, 7, 8] // 需要结算的 商品 id
-}
-```
-
-响应：
-
-```json
-{
-    "idOrder": 3 // 生成的订单 id
-}
-```
-
 # 商品 API
 
 ## 查询 Tab List GET /product/tabList
@@ -416,15 +420,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 {
     "tabs": [
         {
-            "tabId": 0, // Tab Id
+            "tabId": 1, // Tab Id
             "name": "xxx" // Tab 名称
         },
         {
-            "tabId": 1, // Tab Id
+            "tabId": 2, // Tab Id
             "name": "xxx" // Tab 名称            
         },
         {
-            "tabId": 3, // Tab Id
+            "tabId": 4, // Tab Id
             "name": "xxx" // Tab 名称            
         },
     ]
@@ -511,5 +515,198 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 
 ## 查询首页推荐商品列表 GET /product/homeTab
 
-
 # 订单 API
+
+## *结算购物车中的部分商品 POST /order/generateOrder
+
+给出商品 id，结算并生成多个订单
+
+请求：
+
+```json
+{
+    "product_ids": [1, 3, 5, 7, 8] // 需要结算的 商品 id
+}
+```
+
+响应：无
+
+## *查询用户所有订单 GET /order/userOrder
+
+请求：
+
+```json
+{
+	"from": 0, // 开始 index
+	"length": 10 // 取多少个
+} // [from, from + length) 的订单将被返回
+```
+
+响应：
+
+```json
+{
+    orders: [
+        {
+            "owner_user_id": 3, // 哪个用户定的订单
+            "owner_shop_user_id": 4, // 哪个商家接的订单
+            "now_status": 2, // 现在的状态，待支付1、待收货2、待评价3、已完成4
+            "total_price": 433.2, // 最后的总价
+            "transportation_price": 30.1, // 包括的运费
+            "discount_price": 10.3, // 减少的打折费
+            "product_and_count": [ // 商品和数量
+                {
+                    "product_id": 4, // 商品 id
+                    "count": 3 // 数量
+                },
+                {
+                    "product_id": 4,
+                    "count": 6
+                }
+            ],
+            "person_name": "name", // 收件人名字
+            "person_phone_number", "13877766543", // 收件人电话
+            "person_address": "address", // 收件人地址
+            "pay_time": 1531292871, // 支付时间，Unix 时间戳
+            "verify_time": 1531292871, // 确定收货时间，Unix 时间戳
+            "tracking_number": "tracking number", // 快递号
+            "message": "快点发货" // 留言
+        },
+        {
+            "owner_user_id": 3, // 哪个用户定的订单
+            "owner_shop_user_id": 4, // 哪个商家接的订单
+            "now_status": 2, // 现在的状态，待支付1、待收货2、待评价3、已完成4
+            "total_price": 433.2, // 最后的总价
+            "transportation_price": 30.1, // 包括的运费
+            "discount_price": 10.3, // 减少的打折费
+            "product_and_count": [ // 商品和数量
+                {
+                    "product_id": 4, // 商品 id
+                    "count": 3 // 数量
+                },
+                {
+                    "product_id": 4,
+                    "count": 6
+                }
+            ],
+            "person_name": "name", // 收件人名字
+            "person_phone_number", "13877766543", // 收件人电话
+            "person_address": "address", // 收件人地址
+            "pay_time": 1531292871, // 支付时间，Unix 时间戳
+            "verify_time": 1531292871, // 确定收货时间，Unix 时间戳
+            "tracking_number": "tracking number", // 快递号
+            "message": "快点发货" // 留言
+        }
+    ]
+}
+```
+
+## *根据订单 ID 查询一个订单信息 GET /order/orderInfo
+
+请求：
+
+```json
+{
+    order_id: 4 // 查询的订单 id
+}
+```
+
+响应：
+
+```json
+{
+	"owner_user_id": 3, // 哪个用户定的订单
+	"owner_shop_user_id": 4, // 哪个商家接的订单
+	"now_status": 2, // 现在的状态，待支付1、待收货2、待评价3、已完成4
+	"total_price": 433.2, // 最后的总价
+	"transportation_price": 30.1, // 包括的运费
+	"discount_price": 10.3, // 减少的打折费
+	"product_and_count": [ // 商品和数量
+        {
+            "product_id": 4, // 商品 id
+            "count": 3 // 数量
+        },
+        {
+            "product_id": 4,
+            "count": 6
+        }
+    ],
+	"person_name": "name", // 收件人名字
+	"person_phone_number", "13877766543", // 收件人电话
+	"person_address": "address", // 收件人地址
+	"pay_time": 1531292871, // 支付时间，Unix 时间戳
+	"verify_time": 1531292871, // 确定收货时间，Unix 时间戳
+	"tracking_number": "tracking number", // 快递号
+	"message": "快点发货" // 留言
+}
+```
+
+## *查询某个商户的所有订单 GET /order/shopOrder
+
+请求：
+
+```json
+{
+	"from": 0, // 开始 index
+	"length": 10 // 取多少个
+} // [from, from + length) 的订单将被返回
+```
+
+响应：
+
+```json
+{
+    orders: [
+        {
+            "owner_user_id": 3, // 哪个用户定的订单
+            "owner_shop_user_id": 4, // 哪个商家接的订单
+            "now_status": 2, // 现在的状态，待支付1、待收货2、待评价3、已完成4
+            "total_price": 433.2, // 最后的总价
+            "transportation_price": 30.1, // 包括的运费
+            "discount_price": 10.3, // 减少的打折费
+            "product_and_count": [ // 商品和数量
+                {
+                    "product_id": 4, // 商品 id
+                    "count": 3 // 数量
+                },
+                {
+                    "product_id": 4,
+                    "count": 6
+                }
+            ],
+            "person_name": "name", // 收件人名字
+            "person_phone_number", "13877766543", // 收件人电话
+            "person_address": "address", // 收件人地址
+            "pay_time": 1531292871, // 支付时间，Unix 时间戳
+            "verify_time": 1531292871, // 确定收货时间，Unix 时间戳
+            "tracking_number": "tracking number", // 快递号
+            "message": "快点发货" // 留言
+        },
+        {
+            "owner_user_id": 3, // 哪个用户定的订单
+            "owner_shop_user_id": 4, // 哪个商家接的订单
+            "now_status": 2, // 现在的状态，待支付1、待收货2、待评价3、已完成4
+            "total_price": 433.2, // 最后的总价
+            "transportation_price": 30.1, // 包括的运费
+            "discount_price": 10.3, // 减少的打折费
+            "product_and_count": [ // 商品和数量
+                {
+                    "product_id": 4, // 商品 id
+                    "count": 3 // 数量
+                },
+                {
+                    "product_id": 4,
+                    "count": 6
+                }
+            ],
+            "person_name": "name", // 收件人名字
+            "person_phone_number", "13877766543", // 收件人电话
+            "person_address": "address", // 收件人地址
+            "pay_time": 1531292871, // 支付时间，Unix 时间戳
+            "verify_time": 1531292871, // 确定收货时间，Unix 时间戳
+            "tracking_number": "tracking number", // 快递号
+            "message": "快点发货" // 留言
+        }
+    ]
+}
+```

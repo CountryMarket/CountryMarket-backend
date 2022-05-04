@@ -14,6 +14,9 @@ type ReqAddressModifyAddress struct {
 type ReqAddressDeleteAddress struct {
 	AddressId int `form:"addressId" json:"addressId" binding:"required"`
 }
+type ReqAddressModifyDefaultAddress struct {
+	AddressId int `json:"address_id"`
+}
 
 type AddressItem struct {
 	AddressId   int
@@ -23,4 +26,7 @@ type AddressItem struct {
 }
 type ResAddressGetAddress struct {
 	Address []AddressItem
+}
+type ResAddressGetDefaultAddress struct {
+	AddressId int `json:"address_id"`
 }

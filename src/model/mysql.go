@@ -25,6 +25,8 @@ type Model interface {
 	AddressModifyAddress(addressId int, address Address) error
 	AddressDeleteAddress(addressId int) error
 	AddressGetAddress(userId int) ([]Address, error)
+	AddressGetDefaultAddress(userId int) (int, error)
+	AddressModifyDefaultAddress(userId, addressId int) error
 	// shop
 	ShopAddProduct(product Product) error
 	ShopUpdateProduct(product Product, productId int) error
