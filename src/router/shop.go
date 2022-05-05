@@ -12,4 +12,5 @@ func InitShopRouter(g *gin.RouterGroup) {
 
 	g.GET("/product", controller.ShopGetProduct)
 	g.GET("/ownerProducts", middleware.JWTMiddleware(), controller.ShopGetOwnerProducts)
+	g.POST("/dropProduct", middleware.JWTMiddleware(), controller.ShopDropProduct)
 }

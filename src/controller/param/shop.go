@@ -28,6 +28,7 @@ type ResShopGetProduct struct {
 	Title         string
 	Description   string
 	PictureNumber int
+	IsDrop        bool
 }
 type ResShopGetOwnerProducts struct {
 	Products []ResShopGetProduct

@@ -8,6 +8,7 @@ type Product struct {
 	Title         string
 	Description   string
 	PictureNumber int
+	IsDrop        bool
 	gorm.Model
 }
 
@@ -40,4 +41,7 @@ func (m *model) ShopGetOwnerProducts(userId, from, length int) ([]Product, error
 		return []Product{}, err
 	}
 	return products, err
+}
+func (m *model) ShopDropProduct(userId, productId int) error {
+	return m.db.Model(&Product{}).Where("id = ? AND owner_user_id = ?", productId, userId).Update("is_drop", 1).Error
 }

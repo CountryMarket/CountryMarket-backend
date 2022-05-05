@@ -32,6 +32,7 @@ type Model interface {
 	ShopUpdateProduct(product Product, productId int) error
 	ShopGetProduct(productId int) (Product, error)
 	ShopGetOwnerProducts(userId, from, length int) ([]Product, error)
+	ShopDropProduct(userId, productId int) error
 	// cart
 	CartGetUserProducts(userId, from, length int) ([]CartAndProduct, error)
 	CartGetInCart(userId, productId int) (int, error)

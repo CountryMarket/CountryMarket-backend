@@ -59,6 +59,7 @@ func ProductGetTabProducts(ctx *gin.Context) {
 			Title:       v.Title,
 			Description: v.Description,
 			OwnerUserId: v.OwnerUserId,
+			IsDrop:      v.IsDrop,
 		})
 	}
 

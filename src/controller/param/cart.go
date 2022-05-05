@@ -23,6 +23,7 @@ type CartItem struct {
 	Title       string
 	Description string
 	OwnerUserId int
+	IsDrop      bool
 }
 type ResCartGetUserProducts struct {
 	Products []CartItem

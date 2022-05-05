@@ -93,6 +93,7 @@ func ShopGetProduct(ctx *gin.Context) {
 		Title:         product.Title,
 		Description:   product.Description,
 		PictureNumber: product.PictureNumber,
+		IsDrop:        product.IsDrop,
 	})
 }
 func ShopGetOwnerProducts(ctx *gin.Context) {
@@ -129,8 +130,36 @@ func ShopGetOwnerProducts(ctx *gin.Context) {
 			Title:         v.Title,
 			Description:   v.Description,
 			PictureNumber: v.PictureNumber,
+			IsDrop:        v.IsDrop,
 		})
 	}
 
 	response.Success(ctx, param.ResShopGetOwnerProducts{Products: resProducts})
+}
+func ShopDropProduct(ctx *gin.Context) {
+	req := param.ReqShopGetProduct{}
+	if err := ctx.ShouldBindJSON(&req); err != nil {
+		response.Error(ctx, http.StatusBadRequest, "bad request", err)
+		return
+	}
+
+	openid, _ := util.GetClaimsFromJWT(ctx)
+	profile, err := model.Get().UserGetProfile(openid)
+	if err != nil {
+		response.Error(ctx, http.StatusInternalServerError, "cannot get profile", err)
+		return
+	}
+
+	if (profile.Permission & 2) == 0 { // 不是商户账号
+		response.Error(ctx, http.StatusForbidden, "not a seller", nil)
+		return
+	}
+
+	err = model.Get().ShopDropProduct((int)(profile.ID), req.Id)
+	if err != nil {
+		response.Error(ctx, http.StatusInternalServerError, "cannot drop product", err)
+		return
+	}
+
+	response.Success(ctx, "ok")
 }

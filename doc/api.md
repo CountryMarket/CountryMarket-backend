@@ -248,7 +248,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
     "title": "过期猪小排100g", // 标题
     "description": "过期的猪小排。", // 描述
     "pictureNumber": 2, // 可选，详情页幻灯片图片页数
-    "ownerUserId": 2 // 谁的 product，为 user id
+    "ownerUserId": 2, // 谁的 product，为 user id
+    "isDrop": false // 是否下架
 }
 ```
 
@@ -273,18 +274,32 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
             "title": "过期猪小排100g", // 标题
             "description": "过期的猪小排。", // 描述
             "pictureNumber": 2, // 可选，详情页幻灯片图片页数
-            "ownerUserId": 2 // 谁的 product，为 user id
+            "ownerUserId": 2, // 谁的 product，为 user id
+            "isDrop": false // 是否下架
         },
         {
             "price": 233, // 价格
             "title": "过期猪小排100g", // 标题
             "description": "过期的猪小排。", // 描述
             "pictureNumber": 2, // 可选，详情页幻灯片图片页数
-            "ownerUserId": 2 // 谁的 product，为 user id
+            "ownerUserId": 2, // 谁的 product，为 user id
+            "isDrop": false // 是否下架
         }
     ]
 }
 ```
+
+## *下架一个商品 POST /shop/dropProduct
+
+请求：
+
+```json
+{
+    "id": 4 // 下架的商品
+}
+```
+
+响应：无
 
 # 购物车 API
 
@@ -312,7 +327,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
             "price": 233, // 价格
             "title": "过期猪小排100g", // 标题
             "description": "过期的猪小排。", // 描述
-            "ownerUserId": 2 // 谁的 product，为 user id
+            "ownerUserId": 2, // 谁的 product，为 user id
+            "isDrop": false // 是否下架
         },
         {
             "id": 4, // 商品 id
@@ -320,7 +336,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
             "price": 233, // 价格
             "title": "过期猪小排100g", // 标题
             "description": "过期的猪小排。", // 描述
-            "ownerUserId": 2 // 谁的 product，为 user id
+            "ownerUserId": 2, // 谁的 product，为 user id
+            "isDrop": false // 是否下架
         }
     ]
 }
@@ -455,14 +472,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
             "price": 233, // 价格
             "title": "过期猪小排100g", // 标题
             "description": "过期的猪小排。", // 描述
-            "ownerUserId": 2 // 谁的 product，为 user id
+            "ownerUserId": 2, // 谁的 product，为 user id
+            "isDrop": false // 是否下架
         },
         {
             "id": 3, // 商品 id
             "price": 333, // 价格
             "title": "过期牛小排100g", // 标题
             "description": "过期的牛小排。", // 描述
-            "ownerUserId": 2 // 谁的 product，为 user id
+            "ownerUserId": 2, // 谁的 product，为 user id
+            "isDrop": false // 是否下架
         }
     ]
 }
