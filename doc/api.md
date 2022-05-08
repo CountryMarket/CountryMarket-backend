@@ -562,7 +562,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 ```json
 {
 	"from": 0, // 开始 index
-	"length": 10 // 取多少个
+	"length": 10, // 取多少个
+    "status": 1 // 查询什么状态的
 } // [from, from + length) 的订单将被返回
 ```
 
@@ -670,12 +671,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 
 ## *查询某个商户的所有订单 GET /order/shopOrder
 
+shop 端调用
+
 请求：
 
 ```json
 {
 	"from": 0, // 开始 index
-	"length": 10 // 取多少个
+	"length": 10, // 取多少个
+    "status": 1 // 查询什么状态的
 } // [from, from + length) 的订单将被返回
 ```
 
@@ -739,3 +743,47 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
     ]
 }
 ```
+
+## *删除订单 POST /order/deleteOrder
+
+请求：
+
+```json
+{
+    "order_id": 4 // 要删除的订单 id
+}
+```
+
+响应：无
+
+## *更新订单状态 POST /order/changeStatus
+
+shop 端调用
+
+请求：
+
+```json
+{
+    "order_id": 4, // 要更新的订单 id
+    "status": 2, // 新的 status
+    "pay_time": 1531292871, // 可选，按需调用修改，Unix 时间戳
+    "verify_time": 1531292871 // 可选，按需调用修改，Unix 时间戳
+}
+```
+
+响应：无
+
+## *增加订单物流号 POST /order/addTrackingNumber
+
+shop 端调用
+
+请求：
+
+```json
+{
+    "order_id": 4, // 增加物流编号的订单 id
+    "add_tracking_number": "" // 物流编号
+}
+```
+
+响应：无

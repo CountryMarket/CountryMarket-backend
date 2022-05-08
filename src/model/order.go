@@ -44,7 +44,7 @@ func (m *model) OrderGenerateOrder(productsIds [][]int,
 				ownerShopUserId = product.OwnerUserId
 				// 找到购物车中的 count
 				var cart Cart
-				err = m.db.Model(&Cart{}).Where("owner_user_id = ? AND product_id = ?", userId, v2).Take(&cart).Error
+				err = m.db.Model(&Cart{}).Where("owner_user_id = ? AND product_id = ? AND product_count > 0", userId, v2).Take(&cart).Error
 				if err != nil {
 					return err
 				}
@@ -92,23 +92,36 @@ func (m *model) OrderGetOneOrder(orderId, userId int) (ProductOrder, error) {
 	}
 	return order, nil
 }
-func (m *model) OrderGetUserOrder(userId, length, from int) ([]ProductOrder, error) {
-	orders, err := m.orderGetSbOrder(userId, length, from, "owner_user_id")
+func (m *model) OrderGetUserOrder(userId, length, from, status int) ([]ProductOrder, error) {
+	orders, err := m.orderGetSbOrder(userId, length, from, status, "owner_user_id")
 	if err != nil {
 		return []ProductOrder{}, err
 	}
 	return orders, err
 }
-func (m *model) OrderGetShopOrder(userId, length, from int) ([]ProductOrder, error) {
-	orders, err := m.orderGetSbOrder(userId, length, from, "owner_shop_user_id")
+func (m *model) OrderGetShopOrder(userId, length, from, status int) ([]ProductOrder, error) {
+	orders, err := m.orderGetSbOrder(userId, length, from, status, "owner_shop_user_id")
 	if err != nil {
 		return []ProductOrder{}, err
 	}
 	return orders, err
 }
-func (m *model) orderGetSbOrder(userId, length, from int, name string) ([]ProductOrder, error) {
+func (m *model) orderGetSbOrder(userId, length, from, status int, name string) ([]ProductOrder, error) {
 	var orders []ProductOrder
-	err := m.db.Model(&ProductOrder{}).Where(fmt.Sprintf("%s = ?", name), userId).
+	err := m.db.Model(&ProductOrder{}).Where(fmt.Sprintf("%s = ? AND now_status = ?", name), userId, status).
 		Limit(length).Offset(from).Scan(&orders).Error
 	return orders, err
+}
+func (m *model) OrderDeleteOrder(userId, orderId int) error {
+	return m.db.Model(&ProductOrder{}).Where("owner_user_id = ?", userId).Delete(&ProductOrder{}, orderId).Error
+}
+func (m *model) OrderChangeStatus(userId, orderId, status int, payTime, verifyTime time.Time) error {
+	return m.db.Model(&ProductOrder{}).Where("id = ? AND owner_shop_user_id = ?", orderId, userId).Updates(ProductOrder{
+		NowStatus:  status,
+		PayTime:    payTime,
+		VerifyTime: verifyTime,
+	}).Error
+}
+func (m *model) OrderAddTrackingNumber(userId, orderId int, trackingNumber string) error {
+	return m.db.Model(&ProductOrder{}).Where("id = ? AND owner_shop_user_id = ?", orderId, userId).Update("tracking_number", trackingNumber).Error
 }

@@ -11,4 +11,7 @@ func InitOrderRouter(g *gin.RouterGroup) {
 	g.GET("/userOrder", middleware.JWTMiddleware(), controller.OrderGetUserOrder)
 	g.GET("/orderInfo", middleware.JWTMiddleware(), controller.OrderGetOneOrder)
 	g.GET("/shopOrder", middleware.JWTMiddleware(), controller.OrderGetShopOrder)
+	g.POST("/deleteOrder", middleware.JWTMiddleware(), controller.OrderDeleteOrder)
+	g.POST("/changeStatus", middleware.JWTMiddleware(), controller.OrderChangeStatus)
+	g.POST("/addTrackingNumber", middleware.JWTMiddleware(), controller.OrderAddTrackingNumber)
 }

@@ -48,8 +48,11 @@ type Model interface {
 	// order
 	OrderGenerateOrder(productsIds [][]int, userId int, transportationPrice float64, address Address, message string) error
 	OrderGetOneOrder(orderId, userId int) (ProductOrder, error)
-	OrderGetUserOrder(userId, length, from int) ([]ProductOrder, error)
-	OrderGetShopOrder(userId, length, from int) ([]ProductOrder, error)
+	OrderGetUserOrder(userId, length, from, status int) ([]ProductOrder, error)
+	OrderGetShopOrder(userId, length, from, status int) ([]ProductOrder, error)
+	OrderDeleteOrder(userId, orderId int) error
+	OrderChangeStatus(userId, orderId, status int, payTime, verifyTime time.Time) error
+	OrderAddTrackingNumber(userId, orderId int, trackingNumber string) error
 }
 
 type model struct {

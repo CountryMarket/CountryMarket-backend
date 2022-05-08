@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func OrderGenerateOrder(ctx *gin.Context) {
@@ -69,7 +70,7 @@ func OrderGetUserOrder(ctx *gin.Context) {
 		return
 	}
 
-	ordersRaw, err := model.Get().OrderGetUserOrder(int(profile.ID), req.Length, req.From)
+	ordersRaw, err := model.Get().OrderGetUserOrder(int(profile.ID), req.Length, req.From, req.Status)
 	if err != nil {
 		response.Error(ctx, http.StatusInternalServerError, "cannot get orders", err)
 		return
@@ -175,7 +176,7 @@ func OrderGetShopOrder(ctx *gin.Context) {
 		return
 	}
 
-	ordersRaw, err := model.Get().OrderGetShopOrder(int(profile.ID), req.Length, req.From)
+	ordersRaw, err := model.Get().OrderGetShopOrder(int(profile.ID), req.Length, req.From, req.Status)
 	if err != nil {
 		response.Error(ctx, http.StatusInternalServerError, "cannot get orders", err)
 		return
@@ -214,4 +215,70 @@ func OrderGetShopOrder(ctx *gin.Context) {
 	response.Success(ctx, param.ResOrderGetOrders{
 		Orders: orders,
 	})
+}
+func OrderDeleteOrder(ctx *gin.Context) {
+	req := param.ReqOrderGetOneOrder{}
+	if err := ctx.ShouldBindJSON(&req); err != nil {
+		response.Error(ctx, http.StatusBadRequest, "bad request", err)
+		return
+	}
+	openid, _ := util.GetClaimsFromJWT(ctx)
+
+	profile, err := model.Get().UserGetProfile(openid)
+	if err != nil {
+		response.Error(ctx, http.StatusInternalServerError, "cannot get profile", err)
+		return
+	}
+
+	err = model.Get().OrderDeleteOrder(int(profile.ID), req.OrderId)
+	if err != nil {
+		response.Error(ctx, http.StatusInternalServerError, "cannot delete order", err)
+		return
+	}
+	response.Success(ctx, "ok")
+}
+func OrderChangeStatus(ctx *gin.Context) {
+	req := param.ReqOrderChangeStatus{}
+	if err := ctx.ShouldBindJSON(&req); err != nil {
+		response.Error(ctx, http.StatusBadRequest, "bad request", err)
+		return
+	}
+	openid, _ := util.GetClaimsFromJWT(ctx)
+
+	profile, err := model.Get().UserGetProfile(openid)
+	if err != nil {
+		response.Error(ctx, http.StatusInternalServerError, "cannot get profile", err)
+		return
+	}
+
+	var pt, vt time.Time
+	pt = time.Unix(int64(req.PayTime), 0)
+	vt = time.Unix(int64(req.VerifyTime), 0)
+	err = model.Get().OrderChangeStatus(int(profile.ID), req.OrderId, req.Status, pt, vt)
+	if err != nil {
+		response.Error(ctx, http.StatusInternalServerError, "cannot change status", err)
+		return
+	}
+	response.Success(ctx, "ok")
+}
+func OrderAddTrackingNumber(ctx *gin.Context) {
+	req := param.ReqOrderAddTrackingNumber{}
+	if err := ctx.ShouldBindJSON(&req); err != nil {
+		response.Error(ctx, http.StatusBadRequest, "bad request", err)
+		return
+	}
+	openid, _ := util.GetClaimsFromJWT(ctx)
+
+	profile, err := model.Get().UserGetProfile(openid)
+	if err != nil {
+		response.Error(ctx, http.StatusInternalServerError, "cannot get profile", err)
+		return
+	}
+
+	err = model.Get().OrderAddTrackingNumber(int(profile.ID), req.OrderId, req.AddTrackingNumber)
+	if err != nil {
+		response.Error(ctx, http.StatusInternalServerError, "cannot add", err)
+		return
+	}
+	response.Success(ctx, "ok")
 }

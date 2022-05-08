@@ -11,9 +11,20 @@ type ReqOrderGenerateOrder struct {
 type ReqOrderGetOrders struct {
 	From   int `form:"from" json:"from"`
 	Length int `form:"length" json:"length" binding:"required"`
+	Status int `form:"status" json:"status" binding:"required"`
 }
 type ReqOrderGetOneOrder struct {
 	OrderId int `form:"order_id" json:"order_id" binding:"required"`
+}
+type ReqOrderChangeStatus struct {
+	OrderId    int `json:"order_id" binding:"required"`
+	Status     int `json:"status" binding:"required"`
+	PayTime    int `json:"pay_time"`
+	VerifyTime int `json:"verify_time"`
+}
+type ReqOrderAddTrackingNumber struct {
+	OrderId           int    `json:"order_id" binding:"required"`
+	AddTrackingNumber string `json:"add_tracking_number" binding:"required"`
 }
 
 type ResOrderGetOrders struct {
