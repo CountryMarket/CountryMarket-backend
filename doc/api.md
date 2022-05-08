@@ -544,7 +544,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 
 ```json
 {
-    "product_ids": [1, 3, 5, 7, 8] // 需要结算的 商品 id
+    "product_ids": [1, 3, 5, 7, 8], // 需要结算的 商品 id
+    "transportation_price": 5.5, // 运费
+    "name": "hhh", // 收件人名字
+    "phone_number": "18089876534", // 收件人电话
+    "address": "广东省深圳市南山区", // 收件人地址
+    "message": "快点发货" // 用户留言
 }
 ```
 
@@ -565,7 +570,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 
 ```json
 {
-    orders: [
+    "orders": [
         {
             "owner_user_id": 3, // 哪个用户定的订单
             "owner_shop_user_id": 4, // 哪个商家接的订单
@@ -584,8 +589,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
                 }
             ],
             "person_name": "name", // 收件人名字
-            "person_phone_number", "13877766543", // 收件人电话
+            "person_phone_number": "13877766543", // 收件人电话
             "person_address": "address", // 收件人地址
+            "order_time": 1531292871, // 下单时间
             "pay_time": 1531292871, // 支付时间，Unix 时间戳
             "verify_time": 1531292871, // 确定收货时间，Unix 时间戳
             "tracking_number": "tracking number", // 快递号
@@ -609,8 +615,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
                 }
             ],
             "person_name": "name", // 收件人名字
-            "person_phone_number", "13877766543", // 收件人电话
+            "person_phone_number": "13877766543", // 收件人电话
             "person_address": "address", // 收件人地址
+            "order_time": 1531292871, // 下单时间
             "pay_time": 1531292871, // 支付时间，Unix 时间戳
             "verify_time": 1531292871, // 确定收货时间，Unix 时间戳
             "tracking_number": "tracking number", // 快递号
@@ -651,8 +658,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
         }
     ],
 	"person_name": "name", // 收件人名字
-	"person_phone_number", "13877766543", // 收件人电话
+	"person_phone_number": "13877766543", // 收件人电话
 	"person_address": "address", // 收件人地址
+    "order_time": 1531292871, // 下单时间
 	"pay_time": 1531292871, // 支付时间，Unix 时间戳
 	"verify_time": 1531292871, // 确定收货时间，Unix 时间戳
 	"tracking_number": "tracking number", // 快递号
@@ -675,7 +683,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 
 ```json
 {
-    orders: [
+    "orders": [
         {
             "owner_user_id": 3, // 哪个用户定的订单
             "owner_shop_user_id": 4, // 哪个商家接的订单
@@ -696,6 +704,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
             "person_name": "name", // 收件人名字
             "person_phone_number", "13877766543", // 收件人电话
             "person_address": "address", // 收件人地址
+            "order_time": 1531292871, // 下单时间
             "pay_time": 1531292871, // 支付时间，Unix 时间戳
             "verify_time": 1531292871, // 确定收货时间，Unix 时间戳
             "tracking_number": "tracking number", // 快递号
@@ -721,6 +730,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
             "person_name": "name", // 收件人名字
             "person_phone_number", "13877766543", // 收件人电话
             "person_address": "address", // 收件人地址
+            "order_time": 1531292871, // 下单时间
             "pay_time": 1531292871, // 支付时间，Unix 时间戳
             "verify_time": 1531292871, // 确定收货时间，Unix 时间戳
             "tracking_number": "tracking number", // 快递号

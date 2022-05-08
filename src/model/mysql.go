@@ -45,6 +45,11 @@ type Model interface {
 	ProductModifyTabProducts(tabId int, productTab ProductTab) error
 	ProductAddTabProducts(productTab ProductTab) error
 	ProductDeleteTabProducts(tabId int) error
+	// order
+	OrderGenerateOrder(productsIds [][]int, userId int, transportationPrice float64, address Address, message string) error
+	OrderGetOneOrder(orderId, userId int) (ProductOrder, error)
+	OrderGetUserOrder(userId, length, from int) ([]ProductOrder, error)
+	OrderGetShopOrder(userId, length, from int) ([]ProductOrder, error)
 }
 
 type model struct {
