@@ -11,7 +11,7 @@ type ReqOrderGenerateOrder struct {
 type ReqOrderGetOrders struct {
 	From   int `form:"from" json:"from"`
 	Length int `form:"length" json:"length" binding:"required"`
-	Status int `form:"status" json:"status" binding:"required"`
+	Status int `form:"status" json:"status"`
 }
 type ReqOrderGetOneOrder struct {
 	OrderId int `form:"order_id" json:"order_id" binding:"required"`

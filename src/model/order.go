@@ -107,10 +107,19 @@ func (m *model) OrderGetShopOrder(userId, length, from, status int) ([]ProductOr
 	return orders, err
 }
 func (m *model) orderGetSbOrder(userId, length, from, status int, name string) ([]ProductOrder, error) {
-	var orders []ProductOrder
-	err := m.db.Model(&ProductOrder{}).Where(fmt.Sprintf("%s = ? AND now_status = ?", name), userId, status).
-		Limit(length).Offset(from).Scan(&orders).Error
-	return orders, err
+	if status != 0 {
+		fmtStr := fmt.Sprintf("%s = ? AND now_status = ?", name)
+		var orders []ProductOrder
+		err := m.db.Model(&ProductOrder{}).Where(fmtStr, userId, status).
+			Limit(length).Offset(from).Scan(&orders).Error
+		return orders, err
+	} else {
+		fmtStr := fmt.Sprintf("%s = ?", name)
+		var orders []ProductOrder
+		err := m.db.Model(&ProductOrder{}).Where(fmtStr, userId).
+			Limit(length).Offset(from).Scan(&orders).Error
+		return orders, err
+	}
 }
 func (m *model) OrderDeleteOrder(userId, orderId int) error {
 	return m.db.Model(&ProductOrder{}).Where("owner_user_id = ?", userId).Delete(&ProductOrder{}, orderId).Error
