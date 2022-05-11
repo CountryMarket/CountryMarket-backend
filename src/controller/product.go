@@ -151,3 +151,22 @@ func ProductDeleteTab(ctx *gin.Context) {
 	}
 	response.Success(ctx, "ok")
 }
+func ProductGetHomeTab(ctx *gin.Context) {
+	tab, err := model.Get().ProductGetHomeTab()
+	if err != nil {
+		response.Error(ctx, http.StatusInternalServerError, "cannot get home tab", err)
+		return
+	}
+	var products []param.TabProductsItem
+	for _, v := range tab {
+		products = append(products, param.TabProductsItem{
+			Id:          int(v.ID),
+			Price:       v.Price,
+			Title:       v.Title,
+			Description: v.Description,
+			OwnerUserId: v.OwnerUserId,
+			IsDrop:      v.IsDrop,
+		})
+	}
+	response.Success(ctx, param.ResProductGetHomeTab{Products: products})
+}

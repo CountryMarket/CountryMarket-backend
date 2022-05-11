@@ -11,6 +11,9 @@ type ProductTab struct {
 	Products string
 	gorm.Model
 }
+type ProductHome struct {
+	Ids string
+}
 
 func (m *model) ProductGetTabList() ([]int, []string, error) {
 	var tabs []ProductTab
@@ -58,4 +61,25 @@ func (m *model) ProductAddTabProducts(productTab ProductTab) error {
 }
 func (m *model) ProductDeleteTabProducts(tabId int) error {
 	return m.db.Delete(&ProductTab{}, tabId).Error
+}
+func (m *model) ProductGetHomeTab() ([]Product, error) {
+	var productHome ProductHome
+	err := m.db.Model(&ProductHome{}).Take(&productHome).Error
+	if err != nil {
+		return []Product{}, err
+	}
+	idsStr := strings.Split(productHome.Ids, ",")
+	var products []Product
+	for _, v := range idsStr {
+		id, err := strconv.Atoi(v)
+		if err != nil {
+			return []Product{}, err
+		}
+		product, err := m.ShopGetProduct(id)
+		if err != nil {
+			return []Product{}, err
+		}
+		products = append(products, product)
+	}
+	return products, nil
 }

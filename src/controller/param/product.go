@@ -34,3 +34,6 @@ type TabProductsItem struct {
 type ResProductGetTabProducts struct {
 	Products []TabProductsItem
 }
+type ResProductGetHomeTab struct {
+	Products []TabProductsItem `json:"products"`
+}

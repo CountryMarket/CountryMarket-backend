@@ -12,4 +12,5 @@ func InitProductRouter(g *gin.RouterGroup) {
 	g.POST("/tabModify", middleware.JWTMiddleware(), controller.ProductModifyTab)
 	g.POST("/tabAdd", middleware.JWTMiddleware(), controller.ProductAddTab)
 	g.POST("/tabDelete", middleware.JWTMiddleware(), controller.ProductDeleteTab)
+	g.GET("/homeTab", controller.ProductGetHomeTab)
 }

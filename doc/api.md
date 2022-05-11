@@ -534,6 +534,35 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 
 ## 查询首页推荐商品列表 GET /product/homeTab
 
+请求：无
+
+响应：
+
+```json
+{
+    products: [
+        {
+            "id": 2, // 商品 id
+            "price": 233, // 价格
+            "title": "过期猪小排100g", // 标题
+            "description": "过期的猪小排。", // 描述
+            "pictureNumber": 2, // 可选，详情页幻灯片图片页数
+            "ownerUserId": 2, // 谁的 product，为 user id
+            "isDrop": false // 是否下架
+        },
+        {
+            "id": 3, // 商品 id
+            "price": 333, // 价格
+            "title": "过期猪小排100g", // 标题
+            "description": "过期的猪小排。", // 描述
+            "pictureNumber": 4, // 可选，详情页幻灯片图片页数
+            "ownerUserId": 4, // 谁的 product，为 user id
+            "isDrop": false // 是否下架
+        }
+    ]
+}
+```
+
 # 订单 API
 
 ## *结算购物车中的部分商品 POST /order/generateOrder
