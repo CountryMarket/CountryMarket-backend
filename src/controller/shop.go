@@ -28,7 +28,7 @@ func ShopAddProduct(ctx *gin.Context) {
 		return
 	}
 
-	err = model.Get().ShopAddProduct(model.Product{
+	id, err := model.Get().ShopAddProduct(model.Product{
 		OwnerUserId:   int(profile.ID),
 		Price:         req.Price,
 		Title:         req.Title,
@@ -40,7 +40,9 @@ func ShopAddProduct(ctx *gin.Context) {
 		return
 	}
 
-	response.Success(ctx, "ok")
+	response.Success(ctx, gin.H{
+		"id": id,
+	})
 }
 func ShopUpdateProduct(ctx *gin.Context) {
 	req := param.ReqShopUpdateProduct{}

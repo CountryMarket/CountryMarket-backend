@@ -12,12 +12,12 @@ type Product struct {
 	gorm.Model
 }
 
-func (m *model) ShopAddProduct(product Product) error {
+func (m *model) ShopAddProduct(product Product) (int, error) {
 	err := m.db.Model(&Product{}).Create(&product).Error
 	if err != nil {
-		return err
+		return 0, err
 	}
-	return nil
+	return int(product.ID), nil
 }
 func (m *model) ShopUpdateProduct(product Product, productId int) error {
 	err := m.db.Model(&Product{}).Where("id = ?", productId).Updates(product).Error

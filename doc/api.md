@@ -209,7 +209,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 }
 ```
 
-响应：无
+响应：
+
+```json
+{
+    "id": 4 // 新增商品的 id
+}
+```
 
 ## *更新一个商品 POST /shop/updateProduct
 
