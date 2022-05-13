@@ -45,7 +45,7 @@ func OrderGenerateOrder(ctx *gin.Context) {
 		productSlice = append(productSlice, v)
 	}
 	// 生产订单
-	err = model.Get().OrderGenerateOrder(productSlice, int(profile.ID), req.TransportationPrice, model.Address{
+	err = model.Get().OrderGenerateOrder(productSlice, int(profile.ID), profile.PhoneNumber, req.TransportationPrice, model.Address{
 		Name:        req.Name,
 		PhoneNumber: req.PhoneNumber,
 		Address:     req.Address,
@@ -90,6 +90,7 @@ func OrderGetUserOrder(ctx *gin.Context) {
 		orders = append(orders, param.Order{
 			OwnerUserId:         v.OwnerUserId,
 			OwnerShopUserId:     v.OwnerShopUserId,
+			UserPhoneNumber:     v.UserPhoneNumber,
 			NowStatus:           v.NowStatus,
 			TotalPrice:          v.TotalPrice,
 			TransportationPrice: v.TransportationPrice,
@@ -142,6 +143,7 @@ func OrderGetOneOrder(ctx *gin.Context) {
 	response.Success(ctx, param.Order{
 		OwnerUserId:         order.OwnerUserId,
 		OwnerShopUserId:     order.OwnerShopUserId,
+		UserPhoneNumber:     order.UserPhoneNumber,
 		NowStatus:           order.NowStatus,
 		TotalPrice:          order.TotalPrice,
 		TransportationPrice: order.TransportationPrice,
@@ -196,6 +198,7 @@ func OrderGetShopOrder(ctx *gin.Context) {
 		orders = append(orders, param.Order{
 			OwnerUserId:         v.OwnerUserId,
 			OwnerShopUserId:     v.OwnerShopUserId,
+			UserPhoneNumber:     v.UserPhoneNumber,
 			NowStatus:           v.NowStatus,
 			TotalPrice:          v.TotalPrice,
 			TransportationPrice: v.TransportationPrice,

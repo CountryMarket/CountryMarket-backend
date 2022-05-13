@@ -5,12 +5,14 @@ type ReqShopAddProduct struct {
 	Title         string  `form:"title" json:"title" binding:"required"`
 	Description   string  `form:"description" json:"description" binding:"required"`
 	PictureNumber int     `form:"pictureNumber" json:"pictureNumber"`
+	Stock         int     `form:"stock" json:"stock"`
 }
 type ReqShopUpdateProduct struct {
 	Price         float64 `form:"price" json:"price" binding:"required"`
 	Title         string  `form:"title" json:"title" binding:"required"`
 	Description   string  `form:"description" json:"description" binding:"required"`
 	PictureNumber int     `form:"pictureNumber" json:"pictureNumber"`
+	Stock         int     `form:"stock" json:"stock"`
 	Id            int     `form:"id" json:"id" binding:"required"`
 }
 type ReqShopGetProduct struct {
@@ -28,6 +30,7 @@ type ResShopGetProduct struct {
 	Title         string
 	Description   string
 	PictureNumber int
+	Stock         int
 	IsDrop        bool
 }
 type ResShopGetOwnerProducts struct {

@@ -15,18 +15,19 @@ type CartAndProduct struct {
 	Title        string
 	Description  string
 	OwnerUserId  int
+	Stock        int
 	IsDrop       bool
 }
 
 func (m *model) CartGetInCart(userId, productId int) (int, error) {
 	var cart Cart
-	err := m.db.Model(&Cart{}).Where("owner_user_id = ? AND product_id = ?", userId, productId).Take(&cart).Error
+	err := m.db.Model(&Cart{}).Where("owner_user_id = ? AND product_id = ? AND product_count > 0", userId, productId).Take(&cart).Error
 	return cart.ProductCount, err
 }
 func (m *model) CartGetUserProducts(userId, from, length int) ([]CartAndProduct, error) {
 	var carts []CartAndProduct
 	err := m.db.Model(&Cart{}).
-		Select("cart.product_id, cart.product_count, product.price, product.title, product.description, product.owner_user_id, product.is_drop").
+		Select("cart.product_id, cart.product_count, product.price, product.title, product.description, product.owner_user_id, product.is_drop, product.stock").
 		Joins("LEFT JOIN product ON cart.product_id = product.id").
 		Where("cart.owner_user_id = ? AND cart.product_count > 0", userId).
 		Limit(length).Offset(from).Scan(&carts).Error

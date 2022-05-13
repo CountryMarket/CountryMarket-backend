@@ -9,6 +9,7 @@ type Product struct {
 	Description   string
 	PictureNumber int
 	IsDrop        bool
+	Stock         int
 	gorm.Model
 }
 

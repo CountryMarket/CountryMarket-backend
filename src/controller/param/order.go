@@ -37,6 +37,7 @@ type ProductAndCount struct {
 type Order struct {
 	OwnerUserId         int               `json:"owner_user_id"`
 	OwnerShopUserId     int               `json:"owner_shop_user_id"`
+	UserPhoneNumber     string            `json:"user_phone_number"`
 	NowStatus           int               `json:"now_status"`
 	TotalPrice          float64           `json:"total_price"`
 	TransportationPrice float64           `json:"transportation_price"`

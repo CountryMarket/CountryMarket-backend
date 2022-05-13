@@ -29,6 +29,7 @@ type TabProductsItem struct {
 	Title       string
 	Description string
 	OwnerUserId int
+	Stock       int
 	IsDrop      bool
 }
 type ResProductGetTabProducts struct {

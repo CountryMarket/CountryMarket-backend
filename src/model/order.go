@@ -11,6 +11,7 @@ import (
 type ProductOrder struct {
 	OwnerUserId         int
 	OwnerShopUserId     int
+	UserPhoneNumber     string
 	NowStatus           int
 	TotalPrice          float64
 	TransportationPrice float64
@@ -27,9 +28,8 @@ type ProductOrder struct {
 }
 
 func (m *model) OrderGenerateOrder(productsIds [][]int,
-	userId int, transportationPrice float64,
+	userId int, phoneNumber string, transportationPrice float64,
 	address Address, message string) error {
-
 	err := m.db.Transaction(func(tx *gorm.DB) error {
 		for _, v := range productsIds {
 			totalPrice := 0.0
@@ -48,6 +48,10 @@ func (m *model) OrderGenerateOrder(productsIds [][]int,
 				if err != nil {
 					return err
 				}
+				// 判断商品库存是否充足
+				if product.Stock < cart.ProductCount {
+					return errors.New(fmt.Sprintf("stock not enough for product(id = %d)", product.ID))
+				}
 				totalPrice += product.Price * (float64)(cart.ProductCount)
 				// 构造 productAndCount
 				productAndCount += strconv.Itoa(v2) + ","
@@ -55,11 +59,19 @@ func (m *model) OrderGenerateOrder(productsIds [][]int,
 				if j != len(v)-1 {
 					productAndCount += ","
 				}
+				// 从库存中删除
+				err = m.ShopUpdateProduct(Product{
+					Stock: product.Stock - cart.ProductCount,
+				}, v2)
+				if err != nil {
+					return err
+				}
 			}
 
 			err := m.db.Model(&ProductOrder{}).Create(&ProductOrder{
 				OwnerUserId:         userId,
 				OwnerShopUserId:     ownerShopUserId,
+				UserPhoneNumber:     phoneNumber,
 				NowStatus:           1,
 				TotalPrice:          totalPrice + transportationPrice,
 				TransportationPrice: transportationPrice,
@@ -73,6 +85,7 @@ func (m *model) OrderGenerateOrder(productsIds [][]int,
 				TrackingNumber:      "",
 				Message:             message,
 			}).Error
+
 			if err != nil {
 				return err
 			}

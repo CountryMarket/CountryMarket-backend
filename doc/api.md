@@ -205,7 +205,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
     "price": 233, // 价格
     "title": "过期猪小排100g", // 标题
     "description": "过期的猪小排。", // 描述
-    "pictureNumber": 2 // 可选，详情页幻灯片图片页数
+    "pictureNumber": 2, // 可选，详情页幻灯片图片页数
+    "stock": 32 // 库存，不提供默认为 0
 }
 ```
 
@@ -229,6 +230,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
     "title": "过期猪小排100g", // 标题
     "description": "过期的猪小排。", // 描述
     "pictureNumber": 2, // 可选，详情页幻灯片图片页数
+    "stock": 32, // 库存，不提供默认为 0
     "id": 2 // 要改的商品 id
 }
 ```
@@ -255,6 +257,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
     "description": "过期的猪小排。", // 描述
     "pictureNumber": 2, // 可选，详情页幻灯片图片页数
     "ownerUserId": 2, // 谁的 product，为 user id
+    "stock": 32, // 库存，不提供默认为 0
     "isDrop": false // 是否下架
 }
 ```
@@ -281,6 +284,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
             "description": "过期的猪小排。", // 描述
             "pictureNumber": 2, // 可选，详情页幻灯片图片页数
             "ownerUserId": 2, // 谁的 product，为 user id
+            "stock": 32, // 库存
             "isDrop": false // 是否下架
         },
         {
@@ -289,6 +293,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
             "description": "过期的猪小排。", // 描述
             "pictureNumber": 2, // 可选，详情页幻灯片图片页数
             "ownerUserId": 2, // 谁的 product，为 user id
+            "stock": 32, // 库存
             "isDrop": false // 是否下架
         }
     ]
@@ -334,6 +339,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
             "title": "过期猪小排100g", // 标题
             "description": "过期的猪小排。", // 描述
             "ownerUserId": 2, // 谁的 product，为 user id
+            "stock": 32, // 库存
             "isDrop": false // 是否下架
         },
         {
@@ -343,6 +349,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
             "title": "过期猪小排100g", // 标题
             "description": "过期的猪小排。", // 描述
             "ownerUserId": 2, // 谁的 product，为 user id
+            "stock": 32, // 库存
             "isDrop": false // 是否下架
         }
     ]
@@ -479,6 +486,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
             "title": "过期猪小排100g", // 标题
             "description": "过期的猪小排。", // 描述
             "ownerUserId": 2, // 谁的 product，为 user id
+            "stock": 32, // 库存
             "isDrop": false // 是否下架
         },
         {
@@ -487,6 +495,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
             "title": "过期牛小排100g", // 标题
             "description": "过期的牛小排。", // 描述
             "ownerUserId": 2, // 谁的 product，为 user id
+            "stock": 32, // 库存
             "isDrop": false // 是否下架
         }
     ]
@@ -554,6 +563,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
             "description": "过期的猪小排。", // 描述
             "pictureNumber": 2, // 可选，详情页幻灯片图片页数
             "ownerUserId": 2, // 谁的 product，为 user id
+            "stock": 32, // 库存
             "isDrop": false // 是否下架
         },
         {
@@ -563,6 +573,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
             "description": "过期的猪小排。", // 描述
             "pictureNumber": 4, // 可选，详情页幻灯片图片页数
             "ownerUserId": 4, // 谁的 product，为 user id
+            "stock": 32, // 库存
             "isDrop": false // 是否下架
         }
     ]
@@ -631,7 +642,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
             "pay_time": 1531292871, // 支付时间，Unix 时间戳
             "verify_time": 1531292871, // 确定收货时间，Unix 时间戳
             "tracking_number": "tracking number", // 快递号
-            "message": "快点发货" // 留言
+            "message": "快点发货", // 留言
+            "user_phone_number": "13876545678" // 下单人手机号
         },
         {
             "owner_user_id": 3, // 哪个用户定的订单
@@ -657,7 +669,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
             "pay_time": 1531292871, // 支付时间，Unix 时间戳
             "verify_time": 1531292871, // 确定收货时间，Unix 时间戳
             "tracking_number": "tracking number", // 快递号
-            "message": "快点发货" // 留言
+            "message": "快点发货", // 留言
+            "user_phone_number": "13876545678" // 下单人手机号
         }
     ]
 }
@@ -700,7 +713,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 	"pay_time": 1531292871, // 支付时间，Unix 时间戳
 	"verify_time": 1531292871, // 确定收货时间，Unix 时间戳
 	"tracking_number": "tracking number", // 快递号
-	"message": "快点发货" // 留言
+	"message": "快点发货", // 留言
+    "user_phone_number": "13876545678" // 下单人手机号
 }
 ```
 
@@ -747,7 +761,8 @@ shop 端调用
             "pay_time": 1531292871, // 支付时间，Unix 时间戳
             "verify_time": 1531292871, // 确定收货时间，Unix 时间戳
             "tracking_number": "tracking number", // 快递号
-            "message": "快点发货" // 留言
+            "message": "快点发货", // 留言
+            "user_phone_number": "13876545678" // 下单人手机号
         },
         {
             "owner_user_id": 3, // 哪个用户定的订单
@@ -773,7 +788,8 @@ shop 端调用
             "pay_time": 1531292871, // 支付时间，Unix 时间戳
             "verify_time": 1531292871, // 确定收货时间，Unix 时间戳
             "tracking_number": "tracking number", // 快递号
-            "message": "快点发货" // 留言
+            "message": "快点发货", // 留言
+            "user_phone_number": "13876545678" // 下单人手机号
         }
     ]
 }

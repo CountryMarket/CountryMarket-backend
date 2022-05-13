@@ -40,6 +40,7 @@ func CartGetUserProducts(ctx *gin.Context) {
 			Title:       v.Title,
 			Description: v.Description,
 			OwnerUserId: v.OwnerUserId,
+			Stock:       v.Stock,
 			IsDrop:      v.IsDrop,
 		})
 	}

@@ -59,6 +59,7 @@ func ProductGetTabProducts(ctx *gin.Context) {
 			Title:       v.Title,
 			Description: v.Description,
 			OwnerUserId: v.OwnerUserId,
+			Stock:       v.Stock,
 			IsDrop:      v.IsDrop,
 		})
 	}
@@ -165,6 +166,7 @@ func ProductGetHomeTab(ctx *gin.Context) {
 			Title:       v.Title,
 			Description: v.Description,
 			OwnerUserId: v.OwnerUserId,
+			Stock:       v.Stock,
 			IsDrop:      v.IsDrop,
 		})
 	}

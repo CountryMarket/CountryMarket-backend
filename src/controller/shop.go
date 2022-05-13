@@ -34,6 +34,7 @@ func ShopAddProduct(ctx *gin.Context) {
 		Title:         req.Title,
 		Description:   req.Description,
 		PictureNumber: req.PictureNumber,
+		Stock:         req.Stock,
 	})
 	if err != nil {
 		response.Error(ctx, http.StatusInternalServerError, "cannot add product", err)
@@ -51,7 +52,6 @@ func ShopUpdateProduct(ctx *gin.Context) {
 		return
 	}
 	openid, _ := util.GetClaimsFromJWT(ctx)
-
 	profile, err := model.Get().UserGetProfile(openid)
 	if err != nil {
 		response.Error(ctx, http.StatusInternalServerError, "cannot get profile", err)
@@ -69,6 +69,7 @@ func ShopUpdateProduct(ctx *gin.Context) {
 		Title:         req.Title,
 		Description:   req.Description,
 		PictureNumber: req.PictureNumber,
+		Stock:         req.Stock,
 	}, req.Id)
 	if err != nil {
 		response.Error(ctx, http.StatusInternalServerError, "cannot update product", err)
@@ -96,6 +97,7 @@ func ShopGetProduct(ctx *gin.Context) {
 		Description:   product.Description,
 		PictureNumber: product.PictureNumber,
 		IsDrop:        product.IsDrop,
+		Stock:         product.Stock,
 	})
 }
 func ShopGetOwnerProducts(ctx *gin.Context) {
@@ -133,6 +135,7 @@ func ShopGetOwnerProducts(ctx *gin.Context) {
 			Description:   v.Description,
 			PictureNumber: v.PictureNumber,
 			IsDrop:        v.IsDrop,
+			Stock:         v.Stock,
 		})
 	}
 
