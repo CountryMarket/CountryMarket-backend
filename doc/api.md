@@ -502,7 +502,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 }
 ```
 
-## **修改一个 Tab POST /product/tabModify
+## *修改一个 Tab POST /product/tabModify
 
 请求：
 
@@ -646,9 +646,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
             "order_time": 1531292871, // 下单时间
             "pay_time": 1531292871, // 支付时间，Unix 时间戳
             "verify_time": 1531292871, // 确定收货时间，Unix 时间戳
-            "tracking_number": "tracking number", // 快递号
+            "tracking_number": [ // 快递号
+                "75844515448966",
+                "75234515448968",
+                "75584515448966"
+            ],
             "message": "快点发货", // 留言
-            "user_phone_number": "13876545678" // 下单人手机号
+            "user_phone_number": "13876545678", // 下单人手机号
+            "shop_message": "商家退单" // 商户消息
         },
         {
             "order_id": 2, // order id
@@ -674,9 +679,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
             "order_time": 1531292871, // 下单时间
             "pay_time": 1531292871, // 支付时间，Unix 时间戳
             "verify_time": 1531292871, // 确定收货时间，Unix 时间戳
-            "tracking_number": "tracking number", // 快递号
+            "tracking_number": [ // 快递号
+                "75844515448966",
+                "75234515448968",
+                "75584515448966"
+            ],
             "message": "快点发货", // 留言
-            "user_phone_number": "13876545678" // 下单人手机号
+            "user_phone_number": "13876545678", // 下单人手机号
+            "shop_message": "商家退单" // 商户消息
         }
     ]
 }
@@ -696,6 +706,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 
 ```json
 {
+    "order_id": 1, // order id
 	"owner_user_id": 3, // 哪个用户定的订单
 	"owner_shop_user_id": 4, // 哪个商家接的订单
 	"now_status": 2, // 现在的状态，待支付1、待收货2、待评价3、已完成4
@@ -722,9 +733,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
     "order_time": 1531292871, // 下单时间
 	"pay_time": 1531292871, // 支付时间，Unix 时间戳
 	"verify_time": 1531292871, // 确定收货时间，Unix 时间戳
-	"tracking_number": "tracking number", // 快递号
+	"tracking_number": [ // 快递号
+        "75844515448966",
+        "75234515448968",
+        "75584515448966"
+    ],
 	"message": "快点发货", // 留言
-    "user_phone_number": "13876545678" // 下单人手机号
+    "user_phone_number": "13876545678", // 下单人手机号
+    "shop_message": "商家退单" // 商户消息
 }
 ```
 
@@ -775,9 +791,14 @@ shop 端调用
             "order_time": 1531292871, // 下单时间
             "pay_time": 1531292871, // 支付时间，Unix 时间戳
             "verify_time": 1531292871, // 确定收货时间，Unix 时间戳
-            "tracking_number": "tracking number", // 快递号
+            "tracking_number": [ // 快递号
+                "75844515448966",
+                "75234515448968",
+                "75584515448966"
+            ],
             "message": "快点发货", // 留言
-            "user_phone_number": "13876545678" // 下单人手机号
+            "user_phone_number": "13876545678", // 下单人手机号
+            "shop_message": "商家退单" // 商户消息
         },
         {
             "order_id": 3, // order id
@@ -807,9 +828,14 @@ shop 端调用
             "order_time": 1531292871, // 下单时间
             "pay_time": 1531292871, // 支付时间，Unix 时间戳
             "verify_time": 1531292871, // 确定收货时间，Unix 时间戳
-            "tracking_number": "tracking number", // 快递号
+            "tracking_number": [ // 快递号
+                "75844515448966",
+                "75234515448968",
+                "75584515448966"
+            ],
             "message": "快点发货", // 留言
-            "user_phone_number": "13876545678" // 下单人手机号
+            "user_phone_number": "13876545678", // 下单人手机号
+            "shop_message": "商家退单" // 商户消息
         }
     ]
 }
@@ -838,7 +864,9 @@ shop 端调用
     "order_id": 4, // 要更新的订单 id
     "status": 2, // 新的 status
     "pay_time": 1531292871, // 可选，按需调用修改，Unix 时间戳
-    "verify_time": 1531292871 // 可选，按需调用修改，Unix 时间戳
+    "verify_time": 1531292871, // 可选，按需调用修改，Unix 时间戳
+    "shop_message": "商户退单" // 可选，按需调用修改，商户消息，不修改
+    // 可选项不修改就不要这个字段
 }
 ```
 
@@ -853,7 +881,11 @@ shop 端调用
 ```json
 {
     "order_id": 4, // 增加物流编号的订单 id
-    "add_tracking_number": "" // 物流编号
+    "tracking_number": [
+        "75844515448966",
+        "75234515448968",
+        "75584515448966"
+    ] // 物流编号
 }
 ```
 

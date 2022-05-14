@@ -52,7 +52,7 @@ type Model interface {
 	OrderGetUserOrder(userId, length, from, status int) ([]ProductOrder, error)
 	OrderGetShopOrder(userId, length, from, status int) ([]ProductOrder, error)
 	OrderDeleteOrder(userId, orderId int) error
-	OrderChangeStatus(userId, orderId, status int, payTime, verifyTime time.Time) error
+	OrderChangeStatus(userId, orderId, status int, payTime, verifyTime time.Time, shopMessage string) error
 	OrderAddTrackingNumber(userId, orderId int, trackingNumber string) error
 }
 

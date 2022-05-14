@@ -24,6 +24,7 @@ type ProductOrder struct {
 	VerifyTime          time.Time
 	TrackingNumber      string
 	Message             string
+	ShopMessage         string
 	gorm.Model
 }
 
@@ -124,7 +125,7 @@ func (m *model) orderGetSbOrder(userId, length, from, status int, name string) (
 		fmtStr := fmt.Sprintf("%s = ? AND now_status = ?", name)
 		var orders []ProductOrder
 		err := m.db.Model(&ProductOrder{}).Where(fmtStr, userId, status).
-			Limit(length).Offset(from).Scan(&orders).Error
+			Limit(length).Offset(from).Order("now_status").Scan(&orders).Error
 		return orders, err
 	} else {
 		fmtStr := fmt.Sprintf("%s = ?", name)
@@ -137,12 +138,21 @@ func (m *model) orderGetSbOrder(userId, length, from, status int, name string) (
 func (m *model) OrderDeleteOrder(userId, orderId int) error {
 	return m.db.Model(&ProductOrder{}).Where("owner_user_id = ?", userId).Delete(&ProductOrder{}, orderId).Error
 }
-func (m *model) OrderChangeStatus(userId, orderId, status int, payTime, verifyTime time.Time) error {
-	return m.db.Model(&ProductOrder{}).Where("id = ? AND owner_shop_user_id = ?", orderId, userId).Updates(ProductOrder{
-		NowStatus:  status,
-		PayTime:    payTime,
-		VerifyTime: verifyTime,
-	}).Error
+func (m *model) OrderChangeStatus(userId, orderId, status int, payTime, verifyTime time.Time, shopMessage string) error {
+	p := ProductOrder{
+		NowStatus:   status,
+		PayTime:     payTime,
+		VerifyTime:  verifyTime,
+		ShopMessage: shopMessage,
+	}
+	if shopMessage == "" {
+		p = ProductOrder{
+			NowStatus:  status,
+			PayTime:    payTime,
+			VerifyTime: verifyTime,
+		}
+	}
+	return m.db.Model(&ProductOrder{}).Where("id = ? AND owner_shop_user_id = ?", orderId, userId).Updates(p).Error
 }
 func (m *model) OrderAddTrackingNumber(userId, orderId int, trackingNumber string) error {
 	return m.db.Model(&ProductOrder{}).Where("id = ? AND owner_shop_user_id = ?", orderId, userId).Update("tracking_number", trackingNumber).Error

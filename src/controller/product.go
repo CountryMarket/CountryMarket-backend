@@ -82,8 +82,8 @@ func ProductModifyTab(ctx *gin.Context) {
 		return
 	}
 
-	if (profile.Permission & 4) == 0 { // 不是 root
-		response.Error(ctx, http.StatusForbidden, "not a root", nil)
+	if (profile.Permission & 2) == 0 { // 不是 root
+		response.Error(ctx, http.StatusForbidden, "not a shop", nil)
 		return
 	}
 

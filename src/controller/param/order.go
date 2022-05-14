@@ -17,14 +17,15 @@ type ReqOrderGetOneOrder struct {
 	OrderId int `form:"order_id" json:"order_id" binding:"required"`
 }
 type ReqOrderChangeStatus struct {
-	OrderId    int `json:"order_id" binding:"required"`
-	Status     int `json:"status" binding:"required"`
-	PayTime    int `json:"pay_time"`
-	VerifyTime int `json:"verify_time"`
+	OrderId     int    `json:"order_id" binding:"required"`
+	Status      int    `json:"status" binding:"required"`
+	PayTime     int    `json:"pay_time"`
+	VerifyTime  int    `json:"verify_time"`
+	ShopMessage string `json:"shop_message"`
 }
 type ReqOrderAddTrackingNumber struct {
-	OrderId           int    `json:"order_id" binding:"required"`
-	AddTrackingNumber string `json:"add_tracking_number" binding:"required"`
+	OrderId        int      `json:"order_id" binding:"required"`
+	TrackingNumber []string `json:"tracking_number" binding:"required"`
 }
 
 type ProductItem struct {
@@ -60,6 +61,7 @@ type Order struct {
 	OrderTime           int64             `json:"order_time"`
 	PayTime             int64             `json:"pay_time"`
 	VerifyTime          int64             `json:"verify_time"`
-	TrackingNumber      string            `json:"tracking_number"`
+	TrackingNumber      []string          `json:"tracking_number"`
 	Message             string            `json:"message"`
+	ShopMessage         string            `json:"shop_message"`
 }

@@ -118,8 +118,9 @@ func OrderGetUserOrder(ctx *gin.Context) {
 			OrderTime:           v.CreatedAt.Unix(),
 			PayTime:             v.PayTime.Unix(),
 			VerifyTime:          v.VerifyTime.Unix(),
-			TrackingNumber:      v.TrackingNumber,
+			TrackingNumber:      strings.Split(v.TrackingNumber, " "),
 			Message:             v.Message,
+			ShopMessage:         v.ShopMessage,
 		})
 	}
 
@@ -187,8 +188,9 @@ func OrderGetOneOrder(ctx *gin.Context) {
 		OrderTime:           order.CreatedAt.Unix(),
 		PayTime:             order.PayTime.Unix(),
 		VerifyTime:          order.VerifyTime.Unix(),
-		TrackingNumber:      order.TrackingNumber,
+		TrackingNumber:      strings.Split(order.TrackingNumber, " "),
 		Message:             order.Message,
+		ShopMessage:         order.ShopMessage,
 	})
 }
 func OrderGetShopOrder(ctx *gin.Context) {
@@ -258,8 +260,9 @@ func OrderGetShopOrder(ctx *gin.Context) {
 			OrderTime:           v.CreatedAt.Unix(),
 			PayTime:             v.PayTime.Unix(),
 			VerifyTime:          v.VerifyTime.Unix(),
-			TrackingNumber:      v.TrackingNumber,
+			TrackingNumber:      strings.Split(v.TrackingNumber, " "),
 			Message:             v.Message,
+			ShopMessage:         v.ShopMessage,
 		})
 	}
 
@@ -305,7 +308,7 @@ func OrderChangeStatus(ctx *gin.Context) {
 	var pt, vt time.Time
 	pt = time.Unix(int64(req.PayTime), 0)
 	vt = time.Unix(int64(req.VerifyTime), 0)
-	err = model.Get().OrderChangeStatus(int(profile.ID), req.OrderId, req.Status, pt, vt)
+	err = model.Get().OrderChangeStatus(int(profile.ID), req.OrderId, req.Status, pt, vt, req.ShopMessage)
 	if err != nil {
 		response.Error(ctx, http.StatusInternalServerError, "cannot change status", err)
 		return
@@ -326,7 +329,15 @@ func OrderAddTrackingNumber(ctx *gin.Context) {
 		return
 	}
 
-	err = model.Get().OrderAddTrackingNumber(int(profile.ID), req.OrderId, req.AddTrackingNumber)
+	var TNs string
+	for i, v := range req.TrackingNumber {
+		TNs += v
+		if i != len(req.TrackingNumber) {
+			TNs += " "
+		}
+	}
+
+	err = model.Get().OrderAddTrackingNumber(int(profile.ID), req.OrderId, TNs)
 	if err != nil {
 		response.Error(ctx, http.StatusInternalServerError, "cannot add", err)
 		return
