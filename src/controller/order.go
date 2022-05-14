@@ -84,10 +84,26 @@ func OrderGetUserOrder(ctx *gin.Context) {
 		for i := 0; i < len(arrayRaw); i += 2 {
 			id, _ := strconv.Atoi(arrayRaw[i])
 			count, _ := strconv.Atoi(arrayRaw[i+1])
-			pcs = append(pcs, param.ProductAndCount{ProductId: id, Count: count})
+
+			product, err := model.Get().ShopGetProduct(id)
+			if err != nil {
+				return
+			}
+
+			pcs = append(pcs, param.ProductAndCount{Products: param.ProductItem{
+				Id:            int(product.ID),
+				OwnerUserId:   product.OwnerUserId,
+				Price:         product.Price,
+				Title:         product.Title,
+				Description:   product.Description,
+				PictureNumber: product.PictureNumber,
+				Stock:         product.Stock,
+				IsDrop:        product.IsDrop,
+			}, Count: count})
 		}
 
 		orders = append(orders, param.Order{
+			OrderId:             int(v.ID),
 			OwnerUserId:         v.OwnerUserId,
 			OwnerShopUserId:     v.OwnerShopUserId,
 			UserPhoneNumber:     v.UserPhoneNumber,
@@ -137,10 +153,26 @@ func OrderGetOneOrder(ctx *gin.Context) {
 	for i := 0; i < len(arrayRaw); i += 2 {
 		id, _ := strconv.Atoi(arrayRaw[i])
 		count, _ := strconv.Atoi(arrayRaw[i+1])
-		pcs = append(pcs, param.ProductAndCount{ProductId: id, Count: count})
+
+		product, err := model.Get().ShopGetProduct(id)
+		if err != nil {
+			return
+		}
+
+		pcs = append(pcs, param.ProductAndCount{Products: param.ProductItem{
+			Id:            int(product.ID),
+			OwnerUserId:   product.OwnerUserId,
+			Price:         product.Price,
+			Title:         product.Title,
+			Description:   product.Description,
+			PictureNumber: product.PictureNumber,
+			Stock:         product.Stock,
+			IsDrop:        product.IsDrop,
+		}, Count: count})
 	}
 
 	response.Success(ctx, param.Order{
+		OrderId:             int(order.ID),
 		OwnerUserId:         order.OwnerUserId,
 		OwnerShopUserId:     order.OwnerShopUserId,
 		UserPhoneNumber:     order.UserPhoneNumber,
@@ -192,10 +224,26 @@ func OrderGetShopOrder(ctx *gin.Context) {
 		for i := 0; i < len(arrayRaw); i += 2 {
 			id, _ := strconv.Atoi(arrayRaw[i])
 			count, _ := strconv.Atoi(arrayRaw[i+1])
-			pcs = append(pcs, param.ProductAndCount{ProductId: id, Count: count})
+
+			product, err := model.Get().ShopGetProduct(id)
+			if err != nil {
+				return
+			}
+
+			pcs = append(pcs, param.ProductAndCount{Products: param.ProductItem{
+				Id:            int(product.ID),
+				OwnerUserId:   product.OwnerUserId,
+				Price:         product.Price,
+				Title:         product.Title,
+				Description:   product.Description,
+				PictureNumber: product.PictureNumber,
+				Stock:         product.Stock,
+				IsDrop:        product.IsDrop,
+			}, Count: count})
 		}
 
 		orders = append(orders, param.Order{
+			OrderId:             int(v.ID),
 			OwnerUserId:         v.OwnerUserId,
 			OwnerShopUserId:     v.OwnerShopUserId,
 			UserPhoneNumber:     v.UserPhoneNumber,

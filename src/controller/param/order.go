@@ -27,14 +27,25 @@ type ReqOrderAddTrackingNumber struct {
 	AddTrackingNumber string `json:"add_tracking_number" binding:"required"`
 }
 
+type ProductItem struct {
+	Id            int
+	OwnerUserId   int // user 表中的 id 列
+	Price         float64
+	Title         string
+	Description   string
+	PictureNumber int
+	Stock         int
+	IsDrop        bool
+}
 type ResOrderGetOrders struct {
 	Orders []Order `json:"orders"`
 }
 type ProductAndCount struct {
-	ProductId int `json:"product_id"`
-	Count     int `json:"count"`
+	Products ProductItem `json:"products"`
+	Count    int         `json:"count"`
 }
 type Order struct {
+	OrderId             int               `json:"order_id"`
 	OwnerUserId         int               `json:"owner_user_id"`
 	OwnerShopUserId     int               `json:"owner_shop_user_id"`
 	UserPhoneNumber     string            `json:"user_phone_number"`

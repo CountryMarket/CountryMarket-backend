@@ -619,6 +619,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 {
     "orders": [
         {
+            "order_id": 1, // order id
             "owner_user_id": 3, // 哪个用户定的订单
             "owner_shop_user_id": 4, // 哪个商家接的订单
             "now_status": 2, // 现在的状态，待支付1、待收货2、待评价3、已完成4
@@ -627,11 +628,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
             "discount_price": 10.3, // 减少的打折费
             "product_and_count": [ // 商品和数量
                 {
-                    "product_id": 4, // 商品 id
+                    "products": {
+                      // 此处与商品的相同  
+                    },
                     "count": 3 // 数量
                 },
                 {
-                    "product_id": 4,
+                    "products": {
+                      // 此处与商品的相同  
+                    },
                     "count": 6
                 }
             ],
@@ -646,6 +651,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
             "user_phone_number": "13876545678" // 下单人手机号
         },
         {
+            "order_id": 2, // order id
             "owner_user_id": 3, // 哪个用户定的订单
             "owner_shop_user_id": 4, // 哪个商家接的订单
             "now_status": 2, // 现在的状态，待支付1、待收货2、待评价3、已完成4
@@ -698,11 +704,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 	"discount_price": 10.3, // 减少的打折费
 	"product_and_count": [ // 商品和数量
         {
-            "product_id": 4, // 商品 id
+            "products": {
+                // 此处与商品的相同  
+            },
             "count": 3 // 数量
         },
         {
-            "product_id": 4,
+            "products": {
+                // 此处与商品的相同  
+            },
             "count": 6
         }
     ],
@@ -738,6 +748,7 @@ shop 端调用
 {
     "orders": [
         {
+            "order_id": 1, // order id
             "owner_user_id": 3, // 哪个用户定的订单
             "owner_shop_user_id": 4, // 哪个商家接的订单
             "now_status": 2, // 现在的状态，待支付1、待收货2、待评价3、已完成4
@@ -746,11 +757,15 @@ shop 端调用
             "discount_price": 10.3, // 减少的打折费
             "product_and_count": [ // 商品和数量
                 {
-                    "product_id": 4, // 商品 id
+                    "products": {
+                      // 此处与商品的相同  
+                    },
                     "count": 3 // 数量
                 },
                 {
-                    "product_id": 4,
+                    "products": {
+                      // 此处与商品的相同  
+                    },
                     "count": 6
                 }
             ],
@@ -765,6 +780,7 @@ shop 端调用
             "user_phone_number": "13876545678" // 下单人手机号
         },
         {
+            "order_id": 3, // order id
             "owner_user_id": 3, // 哪个用户定的订单
             "owner_shop_user_id": 4, // 哪个商家接的订单
             "now_status": 2, // 现在的状态，待支付1、待收货2、待评价3、已完成4
@@ -773,11 +789,15 @@ shop 端调用
             "discount_price": 10.3, // 减少的打折费
             "product_and_count": [ // 商品和数量
                 {
-                    "product_id": 4, // 商品 id
+                    "products": {
+                      // 此处与商品的相同  
+                    },
                     "count": 3 // 数量
                 },
                 {
-                    "product_id": 4,
+                    "products": {
+                      // 此处与商品的相同  
+                    },
                     "count": 6
                 }
             ],
