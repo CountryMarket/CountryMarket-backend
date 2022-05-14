@@ -377,6 +377,46 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 }
 ```
 
+## *用商品ID查询购物车中的商品 POST /cart/getCart
+
+请求：
+
+```json
+{
+    "product_ids": [1, 3, 4, 6]
+}
+```
+
+响应：
+
+```json
+{
+    "products": [
+         {
+            "id": 4, // 商品 id
+            "count": 4, // 加入的数量
+            "price": 233, // 价格
+            "title": "过期猪小排100g", // 标题
+            "description": "过期的猪小排。", // 描述
+            "ownerUserId": 2, // 谁的 product，为 user id
+            "stock": 32, // 库存
+            "isDrop": false // 是否下架
+        },
+         {
+            "id": 2, // 商品 id
+            "count": 4, // 加入的数量
+            "price": 233, // 价格
+            "title": "过期猪小排100g", // 标题
+            "description": "过期的猪小排。", // 描述
+            "ownerUserId": 2, // 谁的 product，为 user id
+            "stock": 32, // 库存
+            "isDrop": false // 是否下架
+        }
+        // ...
+    ]
+}
+```
+
 ## *增加购物车中的商品数量 POST /cart/addProduct
 
 给出商品 id，增加其商品数量

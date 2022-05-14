@@ -11,6 +11,9 @@ type ReqCartModifyProduct struct {
 	ProductId   int `form:"productId" json:"productId" binding:"required"`
 	ModifyCount int `form:"modifyCount" json:"modifyCount"`
 }
+type ReqCartGetCart struct {
+	ProductIds []int `form:"product_ids" json:"product_ids"`
+}
 
 type ResCartGetInCart struct {
 	InCart bool

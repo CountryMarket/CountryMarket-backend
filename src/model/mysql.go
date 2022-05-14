@@ -35,6 +35,7 @@ type Model interface {
 	ShopDropProduct(userId, productId int) error
 	// cart
 	CartGetUserProducts(userId, from, length int) ([]CartAndProduct, error)
+	CartGetCart(userId int, ids []int) ([]CartAndProduct, error)
 	CartGetInCart(userId, productId int) (int, error)
 	CartAddProduct(userId, productId int) (int, error)
 	CartReduceProduct(userId, productId int) (int, error)

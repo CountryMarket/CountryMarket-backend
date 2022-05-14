@@ -150,3 +150,40 @@ func CartModifyProduct(ctx *gin.Context) {
 		"count": count,
 	})
 }
+func CartGetCart(ctx *gin.Context) {
+	req := param.ReqCartGetCart{}
+	if err := ctx.ShouldBindJSON(&req); err != nil {
+		response.Error(ctx, http.StatusBadRequest, "bad request", err)
+		return
+	}
+	openid, _ := util.GetClaimsFromJWT(ctx)
+
+	profile, err := model.Get().UserGetProfile(openid)
+	if err != nil {
+		response.Error(ctx, http.StatusInternalServerError, "cannot get profile", err)
+		return
+	}
+
+	cartAndProducts, err := model.Get().CartGetCart(int(profile.ID), req.ProductIds)
+	if err != nil {
+		response.Error(ctx, http.StatusInternalServerError, "cannot get product", err)
+		return
+	}
+
+	var resCarts []param.CartItem
+
+	for _, v := range cartAndProducts {
+		resCarts = append(resCarts, param.CartItem{
+			Id:          v.ProductId,
+			Count:       v.ProductCount,
+			Price:       v.Price,
+			Title:       v.Title,
+			Description: v.Description,
+			OwnerUserId: v.OwnerUserId,
+			Stock:       v.Stock,
+			IsDrop:      v.IsDrop,
+		})
+	}
+
+	response.Success(ctx, param.ResCartGetUserProducts{Products: resCarts})
+}

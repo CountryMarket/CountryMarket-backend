@@ -36,6 +36,17 @@ func (m *model) CartGetUserProducts(userId, from, length int) ([]CartAndProduct,
 	}
 	return carts, err
 }
+func (m *model) CartGetCart(userId int, ids []int) ([]CartAndProduct, error) {
+	var carts []CartAndProduct
+	err := m.db.Model(&Cart{}).
+		Select("cart.product_id, cart.product_count, product.price, product.title, product.description, product.owner_user_id, product.is_drop, product.stock").
+		Joins("LEFT JOIN product ON cart.product_id = product.id").
+		Where("cart.owner_user_id = ? AND cart.product_id IN ? AND cart.product_count > 0", userId, ids).Scan(&carts).Error
+	if err != nil {
+		return []CartAndProduct{}, err
+	}
+	return carts, err
+}
 func (m *model) CartAddProduct(userId, productId int) (int, error) {
 	err := m.db.Transaction(func(tx *gorm.DB) error {
 		var cart Cart

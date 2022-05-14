@@ -67,6 +67,11 @@ func (m *model) OrderGenerateOrder(productsIds [][]int,
 				if err != nil {
 					return err
 				}
+				// 从购物车中删除
+				_, err = m.CartModifyProduct(userId, v2, 0)
+				if err != nil {
+					return err
+				}
 			}
 
 			err := m.db.Model(&ProductOrder{}).Create(&ProductOrder{
@@ -131,7 +136,7 @@ func (m *model) orderGetSbOrder(userId, length, from, status int, name string) (
 		fmtStr := fmt.Sprintf("%s = ?", name)
 		var orders []ProductOrder
 		err := m.db.Model(&ProductOrder{}).Where(fmtStr, userId).
-			Limit(length).Offset(from).Order("now_status").Scan(&orders).Error
+			Limit(length).Offset(from).Scan(&orders).Error
 		return orders, err
 	}
 }
