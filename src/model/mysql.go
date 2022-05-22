@@ -55,6 +55,11 @@ type Model interface {
 	OrderDeleteOrder(userId, orderId int) error
 	OrderChangeStatus(userId, orderId, status int, payTime, verifyTime time.Time, shopMessage string) error
 	OrderAddTrackingNumber(userId, orderId int, trackingNumber string) error
+	// comment
+	CommentGetProductComment(productId int) ([]UserComment, error)
+	CommentAddComments(userId int, userComments []UserComment) error
+	CommentAddComment(userId, productId int, comment string) error
+	CommentDeleteComment(commentId int) error
 }
 
 type model struct {

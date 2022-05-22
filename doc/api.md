@@ -930,3 +930,65 @@ shop 端调用
 ```
 
 响应：无
+
+# 评价 API
+
+## *发表评价 POST /comment/add
+
+请求：
+
+```json
+{
+    "comments": [
+        {
+            "product_id": 3, // 商品 ID
+    		"comment": "很香很甜" // 评价内容
+        },
+        {
+            "product_id": 5, // 商品 ID
+    		"comment": "很好" // 评价内容
+        }
+    ]
+}
+```
+
+响应：无
+
+## 查看商品评价 GET /comment/product
+
+请求：
+
+```json
+{
+	"product_id": 4 // 要查询评价的商品 Id
+}
+```
+
+响应：
+
+```json
+{
+	"comments": [
+        {
+            "user_id": 4, // 评价用户
+            "comment": "哈哈" // 评价内容
+        },
+        {
+            "user_id": 3, // 评价用户
+            "comment": "你好" // 评价内容
+        }
+    ]
+}
+```
+
+## *删除评价 POST /comment/delete
+
+请求：
+
+```json
+{
+	"comment_id": 4 // 要删除的评价的 Id
+}
+```
+
+响应：无

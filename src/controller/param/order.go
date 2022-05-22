@@ -6,7 +6,7 @@ type ReqOrderGenerateOrder struct {
 	Name                string  `json:"name" binding:"required"`
 	PhoneNumber         string  `json:"phone_number" binding:"required"`
 	Address             string  `json:"address" binding:"required"`
-	Message             string  `json:"message" binding:"required"`
+	Message             string  `json:"message"`
 }
 type ReqOrderGetOrders struct {
 	From   int `form:"from" json:"from"`
