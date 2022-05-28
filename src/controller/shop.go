@@ -29,12 +29,14 @@ func ShopAddProduct(ctx *gin.Context) {
 	}
 
 	id, err := model.Get().ShopAddProduct(model.Product{
-		OwnerUserId:   int(profile.ID),
-		Price:         req.Price,
-		Title:         req.Title,
-		Description:   req.Description,
-		PictureNumber: req.PictureNumber,
-		Stock:         req.Stock,
+		OwnerUserId:         int(profile.ID),
+		Price:               req.Price,
+		Title:               req.Title,
+		Description:         req.Description,
+		PictureNumber:       req.PictureNumber,
+		Stock:               req.Stock,
+		Detail:              req.Detail,
+		DetailPictureNumber: req.DetailPictureNumber,
 	})
 	if err != nil {
 		response.Error(ctx, http.StatusInternalServerError, "cannot add product", err)
@@ -64,12 +66,14 @@ func ShopUpdateProduct(ctx *gin.Context) {
 	}
 
 	err = model.Get().ShopUpdateProduct(model.Product{
-		OwnerUserId:   int(profile.ID),
-		Price:         req.Price,
-		Title:         req.Title,
-		Description:   req.Description,
-		PictureNumber: req.PictureNumber,
-		Stock:         req.Stock,
+		OwnerUserId:         int(profile.ID),
+		Price:               req.Price,
+		Title:               req.Title,
+		Description:         req.Description,
+		PictureNumber:       req.PictureNumber,
+		Stock:               req.Stock,
+		Detail:              req.Detail,
+		DetailPictureNumber: req.DetailPictureNumber,
 	}, req.Id)
 	if err != nil {
 		response.Error(ctx, http.StatusInternalServerError, "cannot update product", err)
@@ -90,14 +94,16 @@ func ShopGetProduct(ctx *gin.Context) {
 		return
 	}
 	response.Success(ctx, param.ResShopGetProduct{
-		Id:            int(product.ID),
-		OwnerUserId:   product.OwnerUserId, // user 表中的 id 列
-		Price:         product.Price,
-		Title:         product.Title,
-		Description:   product.Description,
-		PictureNumber: product.PictureNumber,
-		IsDrop:        product.IsDrop,
-		Stock:         product.Stock,
+		Id:                  int(product.ID),
+		OwnerUserId:         product.OwnerUserId, // user 表中的 id 列
+		Price:               product.Price,
+		Title:               product.Title,
+		Description:         product.Description,
+		PictureNumber:       product.PictureNumber,
+		IsDrop:              product.IsDrop,
+		Stock:               product.Stock,
+		Detail:              product.Detail,
+		DetailPictureNumber: product.DetailPictureNumber,
 	})
 }
 func ShopGetOwnerProducts(ctx *gin.Context) {
@@ -128,14 +134,16 @@ func ShopGetOwnerProducts(ctx *gin.Context) {
 	var resProducts []param.ResShopGetProduct
 	for _, v := range products {
 		resProducts = append(resProducts, param.ResShopGetProduct{
-			Id:            int(v.ID),
-			OwnerUserId:   v.OwnerUserId, // user 表中的 id 列
-			Price:         v.Price,
-			Title:         v.Title,
-			Description:   v.Description,
-			PictureNumber: v.PictureNumber,
-			IsDrop:        v.IsDrop,
-			Stock:         v.Stock,
+			Id:                  int(v.ID),
+			OwnerUserId:         v.OwnerUserId, // user 表中的 id 列
+			Price:               v.Price,
+			Title:               v.Title,
+			Description:         v.Description,
+			PictureNumber:       v.PictureNumber,
+			IsDrop:              v.IsDrop,
+			Stock:               v.Stock,
+			Detail:              v.Detail,
+			DetailPictureNumber: v.DetailPictureNumber,
 		})
 	}
 

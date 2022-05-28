@@ -203,10 +203,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 ```json
 {
     "price": 233, // 价格
-    "title": "过期猪小排100g", // 标题
+    "title": "没过期猪小排100g", // 标题
     "description": "过期的猪小排。", // 描述
     "pictureNumber": 2, // 可选，详情页幻灯片图片页数
-    "stock": 32 // 库存，不提供默认为 0
+    "stock": 32, // 库存，不提供默认为 0
+    "detail": "新鲜的天的猪小排，哈哈哈哈哈哈", // 详情信息，描述
+    "detailPictureNumber": 3 // 可选，详情信息处的图片页数
 }
 ```
 
@@ -231,7 +233,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
     "description": "过期的猪小排。", // 描述
     "pictureNumber": 2, // 可选，详情页幻灯片图片页数
     "stock": 32, // 库存，不提供默认为 0
-    "id": 2 // 要改的商品 id
+    "id": 2, // 要改的商品 id
+    "detail": "新鲜的天的猪小排，哈哈哈哈哈哈", // 详情信息，描述
+    "detailPictureNumber": 3 // 可选，详情信息处的图片页数
 }
 ```
 
@@ -258,7 +262,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
     "pictureNumber": 2, // 可选，详情页幻灯片图片页数
     "ownerUserId": 2, // 谁的 product，为 user id
     "stock": 32, // 库存，不提供默认为 0
-    "isDrop": false // 是否下架
+    "isDrop": false, // 是否下架
+    "detail": "新鲜的天的猪小排，哈哈哈哈哈哈", // 详情信息，描述
+    "detailPictureNumber": 3 // 可选，详情信息处的图片页数
 }
 ```
 
@@ -285,7 +291,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
             "pictureNumber": 2, // 可选，详情页幻灯片图片页数
             "ownerUserId": 2, // 谁的 product，为 user id
             "stock": 32, // 库存
-            "isDrop": false // 是否下架
+            "isDrop": false, // 是否下架
+            "detail": "新鲜的天的猪小排，哈哈哈哈哈哈", // 详情信息，描述
+    		"detailPictureNumber": 3 // 可选，详情信息处的图片页数
         },
         {
             "price": 233, // 价格
@@ -294,7 +302,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
             "pictureNumber": 2, // 可选，详情页幻灯片图片页数
             "ownerUserId": 2, // 谁的 product，为 user id
             "stock": 32, // 库存
-            "isDrop": false // 是否下架
+            "isDrop": false, // 是否下架
+            "detail": "新鲜的天的猪小排，哈哈哈哈哈哈", // 详情信息，描述
+    		"detailPictureNumber": 3 // 可选，详情信息处的图片页数
         }
     ]
 }

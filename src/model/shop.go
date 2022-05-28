@@ -3,13 +3,15 @@ package model
 import "gorm.io/gorm"
 
 type Product struct {
-	OwnerUserId   int // user 表中的 id 列
-	Price         float64
-	Title         string
-	Description   string
-	PictureNumber int
-	IsDrop        bool
-	Stock         int
+	OwnerUserId         int // user 表中的 id 列
+	Price               float64
+	Title               string
+	Description         string
+	PictureNumber       int
+	IsDrop              bool
+	Stock               int
+	Detail              string
+	DetailPictureNumber int
 	gorm.Model
 }
 
