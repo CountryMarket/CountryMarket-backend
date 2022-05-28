@@ -1,6 +1,7 @@
 package router
 
 import (
+	"github.com/CountryMarket/CountryMarket-backend/controller"
 	"github.com/gin-gonic/gin"
 )
 
@@ -19,4 +20,6 @@ func InitRouter(g *gin.RouterGroup) {
 	InitOrderRouter(rOrder)
 	rComment := g.Group("/comment")
 	InitCommentRouter(rComment)
+
+	g.POST("/search", controller.Search)
 }

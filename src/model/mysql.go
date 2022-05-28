@@ -60,6 +60,8 @@ type Model interface {
 	CommentAddComments(userId int, userComments []UserComment) error
 	CommentAddComment(userId, productId int, comment string) error
 	CommentDeleteComment(commentId int) error
+	// search
+	Search(key string) ([]Product, error)
 }
 
 type model struct {

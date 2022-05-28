@@ -285,6 +285,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 {
     "Products": [
         {
+            "id": 2,
             "price": 233, // 价格
             "title": "过期猪小排100g", // 标题
             "description": "过期的猪小排。", // 描述
@@ -296,6 +297,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
     		"detailPictureNumber": 3 // 可选，详情信息处的图片页数
         },
         {
+            "id": 4,
             "price": 233, // 价格
             "title": "过期猪小排100g", // 标题
             "description": "过期的猪小排。", // 描述
@@ -1002,3 +1004,49 @@ shop 端调用
 ```
 
 响应：无
+
+# 搜索 API
+
+## 搜索商品标题 POST /search
+
+请求：
+
+```json
+{
+	"key": "鸡" // 要查询的关键字
+}
+```
+
+响应：
+
+```json
+{
+    "Products": [
+        {
+            "id": 2,
+            "price": 233, // 价格
+            "title": "鸡小排100g", // 标题
+            "description": "过期的猪小排。", // 描述
+            "pictureNumber": 2, // 可选，详情页幻灯片图片页数
+            "ownerUserId": 2, // 谁的 product，为 user id
+            "stock": 32, // 库存
+            "isDrop": false, // 是否下架
+            "detail": "新鲜的天的猪小排，哈哈哈哈哈哈", // 详情信息，描述
+    		"detailPictureNumber": 3 // 可选，详情信息处的图片页数
+        },
+        {
+            "id": 4,
+            "price": 233, // 价格
+            "title": "鸡小排100g", // 标题
+            "description": "过期的猪小排。", // 描述
+            "pictureNumber": 2, // 可选，详情页幻灯片图片页数
+            "ownerUserId": 2, // 谁的 product，为 user id
+            "stock": 32, // 库存
+            "isDrop": false, // 是否下架
+            "detail": "新鲜的天的猪小排，哈哈哈哈哈哈", // 详情信息，描述
+    		"detailPictureNumber": 3 // 可选，详情信息处的图片页数
+        }
+    ]
+}
+```
+
