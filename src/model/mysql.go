@@ -47,7 +47,7 @@ type Model interface {
 	ProductModifyTabProducts(tabId int, productTab ProductTab) error
 	ProductAddTabProducts(productTab ProductTab) error
 	ProductDeleteTabProducts(tabId int) error
-	ProductGetHomeTab() ([]Product, error)
+	ProductGetHomeTab(from, length int) ([]Product, error)
 	// order
 	OrderGenerateOrder(productsIds [][]int, userId int, phoneNumber string, transportationPrice float64, address Address, message string) ([]int, error)
 	OrderGetOneOrder(orderId, userId int) (ProductOrder, error)

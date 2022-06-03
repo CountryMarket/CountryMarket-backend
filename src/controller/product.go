@@ -153,7 +153,12 @@ func ProductDeleteTab(ctx *gin.Context) {
 	response.Success(ctx, "ok")
 }
 func ProductGetHomeTab(ctx *gin.Context) {
-	tab, err := model.Get().ProductGetHomeTab()
+	req := param.ReqProductGetHomeTab{}
+	if err := ctx.ShouldBindQuery(&req); err != nil {
+		response.Error(ctx, http.StatusBadRequest, "bad request", err)
+		return
+	}
+	tab, err := model.Get().ProductGetHomeTab(req.From, req.Length)
 	if err != nil {
 		response.Error(ctx, http.StatusInternalServerError, "cannot get home tab", err)
 		return

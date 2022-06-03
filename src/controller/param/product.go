@@ -15,6 +15,10 @@ type ReqProductAddTab struct {
 type ReqProductDeleteTab struct {
 	TabId int `form:"tabId" json:"tabId" binding:"required"`
 }
+type ReqProductGetHomeTab struct {
+	From   int `form:"from" json:"from"`
+	Length int `form:"length" json:"length" binding:"required"`
+}
 
 type TabItem struct {
 	Id   int

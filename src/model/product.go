@@ -62,7 +62,7 @@ func (m *model) ProductAddTabProducts(productTab ProductTab) error {
 func (m *model) ProductDeleteTabProducts(tabId int) error {
 	return m.db.Delete(&ProductTab{}, tabId).Error
 }
-func (m *model) ProductGetHomeTab() ([]Product, error) {
+func (m *model) ProductGetHomeTab(from, length int) ([]Product, error) {
 	var productHome ProductHome
 	err := m.db.Model(&ProductHome{}).Take(&productHome).Error
 	if err != nil {
@@ -81,5 +81,18 @@ func (m *model) ProductGetHomeTab() ([]Product, error) {
 		}
 		products = append(products, product)
 	}
-	return products, nil
+	if from < len(products) && from+length-1 <= len(products)-1 { // 全在前面
+		return products[from : from+length], nil
+	}
+	if from >= len(products) { // 全在后面
+		var fp []Product
+		err = m.db.Model(&Product{}).Limit(length).Offset(from - len(products)).Order("id DESC").Scan(&fp).Error
+		return fp, nil
+	}
+	var fp []Product // 两边都有
+	err = m.db.Model(&Product{}).Limit(length - len(products) + from).Order("id DESC").Scan(&fp).Error
+	if err != nil {
+		return []Product{}, err
+	}
+	return append(products[from:], fp...), nil
 }
