@@ -324,6 +324,18 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 
 响应：无
 
+## *上架一个商品 POST /shop/putProduct
+
+请求：
+
+```json
+{
+    "id": 4 // 上架的商品
+}
+```
+
+响应：无
+
 # 购物车 API
 
 ## *查询用户购物车商品 GET /cart/userProducts
@@ -1050,3 +1062,4 @@ shop 端调用
 }
 ```
 
+ 

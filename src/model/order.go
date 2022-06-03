@@ -30,7 +30,8 @@ type ProductOrder struct {
 
 func (m *model) OrderGenerateOrder(productsIds [][]int,
 	userId int, phoneNumber string, transportationPrice float64,
-	address Address, message string) error {
+	address Address, message string) ([]int, error) {
+	var resId []int
 	err := m.db.Transaction(func(tx *gorm.DB) error {
 		for _, v := range productsIds {
 			totalPrice := 0.0
@@ -74,7 +75,7 @@ func (m *model) OrderGenerateOrder(productsIds [][]int,
 				}
 			}
 
-			err := m.db.Model(&ProductOrder{}).Create(&ProductOrder{
+			p := ProductOrder{
 				OwnerUserId:         userId,
 				OwnerShopUserId:     ownerShopUserId,
 				UserPhoneNumber:     phoneNumber,
@@ -90,15 +91,20 @@ func (m *model) OrderGenerateOrder(productsIds [][]int,
 				VerifyTime:          time.Unix(0, 0),
 				TrackingNumber:      "",
 				Message:             message,
-			}).Error
+			}
+
+			err := m.db.Model(&ProductOrder{}).Create(&p).Error
 
 			if err != nil {
 				return err
 			}
+
+			resId = append(resId, (int)(p.ID))
+
 		}
 		return nil
 	})
-	return err
+	return resId, err
 }
 func (m *model) OrderGetOneOrder(orderId, userId int) (ProductOrder, error) {
 	var order ProductOrder
@@ -130,13 +136,13 @@ func (m *model) orderGetSbOrder(userId, length, from, status int, name string) (
 		fmtStr := fmt.Sprintf("%s = ? AND now_status = ?", name)
 		var orders []ProductOrder
 		err := m.db.Model(&ProductOrder{}).Where(fmtStr, userId, status).
-			Limit(length).Offset(from).Scan(&orders).Error
+			Limit(length).Offset(from).Order("id DESC").Scan(&orders).Error
 		return orders, err
 	} else {
 		fmtStr := fmt.Sprintf("%s = ?", name)
 		var orders []ProductOrder
 		err := m.db.Model(&ProductOrder{}).Where(fmtStr, userId).
-			Limit(length).Offset(from).Scan(&orders).Error
+			Limit(length).Offset(from).Order("id DESC").Scan(&orders).Error
 		return orders, err
 	}
 }
@@ -157,8 +163,8 @@ func (m *model) OrderChangeStatus(userId, orderId, status int, payTime, verifyTi
 			VerifyTime: verifyTime,
 		}
 	}
-	return m.db.Model(&ProductOrder{}).Where("id = ? AND owner_shop_user_id = ?", orderId, userId).Updates(p).Error
+	return m.db.Model(&ProductOrder{}).Where("id = ?", orderId).Updates(p).Error
 }
 func (m *model) OrderAddTrackingNumber(userId, orderId int, trackingNumber string) error {
-	return m.db.Model(&ProductOrder{}).Where("id = ? AND owner_shop_user_id = ?", orderId, userId).Update("tracking_number", trackingNumber).Error
+	return m.db.Model(&ProductOrder{}).Where("id = ?", orderId).Update("tracking_number", trackingNumber).Error
 }

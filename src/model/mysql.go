@@ -33,6 +33,7 @@ type Model interface {
 	ShopGetProduct(productId int) (Product, error)
 	ShopGetOwnerProducts(userId, from, length int) ([]Product, error)
 	ShopDropProduct(userId, productId int) error
+	ShopPutProduct(userId, productId int) error
 	// cart
 	CartGetUserProducts(userId, from, length int) ([]CartAndProduct, error)
 	CartGetCart(userId int, ids []int) ([]CartAndProduct, error)
@@ -48,7 +49,7 @@ type Model interface {
 	ProductDeleteTabProducts(tabId int) error
 	ProductGetHomeTab() ([]Product, error)
 	// order
-	OrderGenerateOrder(productsIds [][]int, userId int, phoneNumber string, transportationPrice float64, address Address, message string) error
+	OrderGenerateOrder(productsIds [][]int, userId int, phoneNumber string, transportationPrice float64, address Address, message string) ([]int, error)
 	OrderGetOneOrder(orderId, userId int) (ProductOrder, error)
 	OrderGetUserOrder(userId, length, from, status int) ([]ProductOrder, error)
 	OrderGetShopOrder(userId, length, from, status int) ([]ProductOrder, error)

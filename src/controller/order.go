@@ -26,7 +26,7 @@ func OrderGenerateOrder(ctx *gin.Context) {
 		return
 	}
 
-	// 找到商品各自的商家
+	/*// 找到商品各自的商家
 	productMap := make(map[int][]int)
 	for _, v := range req.ProductIds {
 		product, err := model.Get().ShopGetProduct(v)
@@ -43,9 +43,11 @@ func OrderGenerateOrder(ctx *gin.Context) {
 	var productSlice [][]int
 	for _, v := range productMap {
 		productSlice = append(productSlice, v)
-	}
+	}*/
+	var productSlice [][]int
+	productSlice = append(productSlice, req.ProductIds)
 	// 生产订单
-	err = model.Get().OrderGenerateOrder(productSlice, int(profile.ID), profile.PhoneNumber, req.TransportationPrice, model.Address{
+	resId, err := model.Get().OrderGenerateOrder(productSlice, int(profile.ID), profile.PhoneNumber, req.TransportationPrice, model.Address{
 		Name:        req.Name,
 		PhoneNumber: req.PhoneNumber,
 		Address:     req.Address,
@@ -54,7 +56,9 @@ func OrderGenerateOrder(ctx *gin.Context) {
 		response.Error(ctx, http.StatusInternalServerError, "cannot generate product", err)
 		return
 	}
-	response.Success(ctx, "ok")
+	response.Success(ctx, gin.H{
+		"order_id": resId,
+	})
 }
 func OrderGetUserOrder(ctx *gin.Context) {
 	req := param.ReqOrderGetOrders{}

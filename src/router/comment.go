@@ -8,6 +8,6 @@ import (
 
 func InitCommentRouter(g *gin.RouterGroup) {
 	g.POST("/add", middleware.JWTMiddleware(), controller.CommentAddComment)
-	g.GET("/product", middleware.JWTMiddleware(), controller.CommentGetProductComment)
+	g.GET("/product", controller.CommentGetProductComment)
 	g.POST("/delete", middleware.JWTMiddleware(), controller.CommentDeleteComment)
 }

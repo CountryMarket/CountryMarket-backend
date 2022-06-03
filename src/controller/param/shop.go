@@ -15,7 +15,7 @@ type ReqShopUpdateProduct struct {
 	Description         string  `form:"description" json:"description" binding:"required"`
 	PictureNumber       int     `form:"pictureNumber" json:"pictureNumber"`
 	Stock               int     `form:"stock" json:"stock"`
-	Detail              string  `form:"detail" json:"detail" binding:"required"`
+	Detail              string  `form:"detail" json:"detail"`
 	DetailPictureNumber int     `form:"detailPictureNumber" json:"detailPictureNumber"`
 	Id                  int     `form:"id" json:"id" binding:"required"`
 }

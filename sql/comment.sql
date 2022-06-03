@@ -1,0 +1,5 @@
+CREATE TABLE user_comment (
+	id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	user_id INT NOT NULL,
+	comment VARCHAR(255) DEFAULT ""
+);

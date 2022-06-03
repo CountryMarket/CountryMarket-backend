@@ -48,3 +48,6 @@ func (m *model) ShopGetOwnerProducts(userId, from, length int) ([]Product, error
 func (m *model) ShopDropProduct(userId, productId int) error {
 	return m.db.Model(&Product{}).Where("id = ? AND owner_user_id = ?", productId, userId).Update("is_drop", 1).Error
 }
+func (m *model) ShopPutProduct(userId, productId int) error {
+	return m.db.Model(&Product{}).Where("id = ? AND owner_user_id = ?", productId, userId).Update("is_drop", 0).Error
+}

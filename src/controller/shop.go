@@ -176,3 +176,30 @@ func ShopDropProduct(ctx *gin.Context) {
 
 	response.Success(ctx, "ok")
 }
+func ShopPutProduct(ctx *gin.Context) {
+	req := param.ReqShopGetProduct{}
+	if err := ctx.ShouldBindJSON(&req); err != nil {
+		response.Error(ctx, http.StatusBadRequest, "bad request", err)
+		return
+	}
+
+	openid, _ := util.GetClaimsFromJWT(ctx)
+	profile, err := model.Get().UserGetProfile(openid)
+	if err != nil {
+		response.Error(ctx, http.StatusInternalServerError, "cannot get profile", err)
+		return
+	}
+
+	if (profile.Permission & 2) == 0 { // 不是商户账号
+		response.Error(ctx, http.StatusForbidden, "not a seller", nil)
+		return
+	}
+
+	err = model.Get().ShopPutProduct((int)(profile.ID), req.Id)
+	if err != nil {
+		response.Error(ctx, http.StatusInternalServerError, "cannot drop product", err)
+		return
+	}
+
+	response.Success(ctx, "ok")
+}
