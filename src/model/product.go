@@ -2,6 +2,7 @@ package model
 
 import (
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 	"strconv"
 	"strings"
 )
@@ -86,11 +87,15 @@ func (m *model) ProductGetHomeTab(from, length int) ([]Product, error) {
 	}
 	if from >= len(products) { // 全在后面
 		var fp []Product
-		err = m.db.Model(&Product{}).Limit(length).Offset(from - len(products)).Order("id DESC").Scan(&fp).Error
+		err = m.db.Clauses(clause.OrderBy{
+			Expression: clause.Expr{SQL: "RAND()", WithoutParentheses: true},
+		}).Model(&Product{}).Limit(length).Offset(from - len(products)).Scan(&fp).Error
 		return fp, nil
 	}
 	var fp []Product // 两边都有
-	err = m.db.Model(&Product{}).Limit(length - len(products) + from).Order("id DESC").Scan(&fp).Error
+	err = m.db.Clauses(clause.OrderBy{
+		Expression: clause.Expr{SQL: "RAND()", WithoutParentheses: true},
+	}).Model(&Product{}).Limit(length - len(products) + from).Order("id DESC").Scan(&fp).Error
 	if err != nil {
 		return []Product{}, err
 	}

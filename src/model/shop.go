@@ -39,7 +39,7 @@ func (m *model) ShopGetProduct(productId int) (Product, error) {
 }
 func (m *model) ShopGetOwnerProducts(userId, from, length int) ([]Product, error) {
 	var products []Product
-	err := m.db.Model(&Product{}).Where("owner_user_id = ?", userId).Limit(length).Offset(from).Scan(&products).Error
+	err := m.db.Model(&Product{}).Where("owner_user_id = ?", userId).Limit(length).Offset(from).Order("id DESC").Scan(&products).Error
 	if err != nil {
 		return []Product{}, err
 	}

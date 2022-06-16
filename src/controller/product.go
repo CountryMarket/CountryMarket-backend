@@ -28,7 +28,7 @@ func ProductGetTabList(ctx *gin.Context) {
 		return
 	}
 	var tabs []param.TabItem
-	for i, _ := range ids {
+	for i := range ids {
 		tabs = append(tabs, param.TabItem{
 			Id:   ids[i],
 			Name: names[i],
@@ -175,5 +175,19 @@ func ProductGetHomeTab(ctx *gin.Context) {
 			IsDrop:      v.IsDrop,
 		})
 	}
+	/*for i := 0; i < 5; i++ {
+		for j := i; j < len(tab); j += 5 {
+			v := tab[j]
+			products = append(products, param.TabProductsItem{
+				Id:          int(v.ID),
+				Price:       v.Price,
+				Title:       v.Title,
+				Description: v.Description,
+				OwnerUserId: v.OwnerUserId,
+				Stock:       v.Stock,
+				IsDrop:      v.IsDrop,
+			})
+		}
+	}*/
 	response.Success(ctx, param.ResProductGetHomeTab{Products: products})
 }

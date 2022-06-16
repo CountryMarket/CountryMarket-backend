@@ -124,3 +124,32 @@ func UserModifyPermission(ctx *gin.Context) { // root 操作
 
 	response.Success(ctx, "ok")
 }
+func UserGetToken(ctx *gin.Context) { // root 操作
+	req := param.ReqGetToken{}
+	if err := ctx.ShouldBindQuery(&req); err != nil {
+		response.Error(ctx, http.StatusBadRequest, "bad request", err)
+		return
+	}
+
+	openid, _ := util.GetClaimsFromJWT(ctx)
+	profile, err := model.Get().UserGetProfile(openid)
+	if err != nil {
+		response.Error(ctx, http.StatusInternalServerError, "cannot get user database", err)
+		return
+	}
+
+	if (profile.Permission & 4) == 0 { // root 操作
+		response.Error(ctx, http.StatusForbidden, "not a root", err)
+		return
+	}
+
+	token, _, err := util.GenerateJWTToken(req.OpenId, req.SessionKey)
+	if err != nil {
+		response.Error(ctx, http.StatusInternalServerError, "cannot generate token", err)
+		return
+	}
+
+	response.Success(ctx, gin.H{
+		"token": token,
+	})
+}

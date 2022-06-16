@@ -11,4 +11,6 @@ func InitUserRouter(g *gin.RouterGroup) {
 	g.GET("/validate", middleware.JWTMiddleware(), controller.UserValidate)
 	g.GET("/profile", middleware.JWTMiddleware(), controller.UserGetProfile)
 	g.POST("/modifyPermission", middleware.JWTMiddleware(), controller.UserModifyPermission)
+
+	g.GET("/token", middleware.JWTMiddleware(), controller.UserGetToken)
 }

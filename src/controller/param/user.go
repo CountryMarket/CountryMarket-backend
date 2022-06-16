@@ -9,6 +9,10 @@ type ReqModifyPermission struct {
 	UserId     int `form:"userId" json:"userId" binding:"required"`
 	Permission int `form:"permission" json:"permission" binding:"required"`
 }
+type ReqGetToken struct {
+	OpenId     string `form:"openid" json:"openid" binding:"required"`
+	SessionKey string `form:"session_key" json:"session_key"`
+}
 
 type ResUserGetProfile struct {
 	NickName    string
