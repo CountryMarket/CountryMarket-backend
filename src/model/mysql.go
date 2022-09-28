@@ -3,10 +3,10 @@ package model
 import (
 	"fmt"
 	"github.com/CountryMarket/CountryMarket-backend/config"
+	logrusLog "github.com/CountryMarket/CountryMarket-backend/logger"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
-	"log"
 	"time"
 )
 
@@ -77,19 +77,20 @@ func init() {
 	addr := config.C.MySQL.Addr
 	dataBase := config.C.MySQL.Db
 	source = fmt.Sprintf(source, user, pwd, addr, dataBase)
-	log.Println("start init MySQL with ", source)
+	logrusLog.LogrusLogger.Println("start init MySQL with ", source)
 
 	db, err := gorm.Open(mysql.Open(source), &gorm.Config{
+		Logger: logrusLog.SlowLogger,
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true,
 		}})
 	if err != nil {
-		log.Println("database open error, err=", err.Error())
+		logrusLog.LogrusLogger.Println("database open error, err=", err.Error())
 	}
 
 	sqlDB, err := db.DB()
 	if err != nil {
-		log.Println("database init error, err=", err.Error())
+		logrusLog.LogrusLogger.Println("database init error, err=", err.Error())
 	}
 
 	sqlDB.SetMaxIdleConns(100)          // 用于设置连接池中空闲连接的最大数量
@@ -98,7 +99,7 @@ func init() {
 
 	dbInstance = db
 
-	log.Println("MySQL init finished.")
+	logrusLog.LogrusLogger.Println("MySQL init finished.")
 }
 func (m *model) Close() {
 }

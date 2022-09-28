@@ -2,10 +2,13 @@ package router
 
 import (
 	"github.com/CountryMarket/CountryMarket-backend/controller"
+	"github.com/CountryMarket/CountryMarket-backend/middleware"
 	"github.com/gin-gonic/gin"
 )
 
 func InitRouter(g *gin.RouterGroup) {
+	g.Use(middleware.Logger())
+
 	rUser := g.Group("/user")
 	InitUserRouter(rUser)
 	rShop := g.Group("/shop")
