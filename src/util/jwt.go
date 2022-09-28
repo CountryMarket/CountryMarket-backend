@@ -2,6 +2,7 @@ package util
 
 import (
 	"errors"
+	"github.com/CountryMarket/CountryMarket-backend/config"
 	"github.com/CountryMarket/CountryMarket-backend/constant"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
@@ -25,7 +26,7 @@ func GenerateJWTToken(openid, sessionKey string) (string, int64, error) {
 		},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	t, err := token.SignedString([]byte(os.Getenv("APPSECRET")))
+	t, err := token.SignedString([]byte(os.Getenv(config.C.Jwt.Secret)))
 	if err != nil {
 		return t, 0, err
 	}
@@ -33,7 +34,7 @@ func GenerateJWTToken(openid, sessionKey string) (string, int64, error) {
 }
 func ParseJWTToken(tokenStr string) (*JwtClaims, error) {
 	token, err := jwt.ParseWithClaims(tokenStr, &JwtClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return []byte(os.Getenv("APPSECRET")), nil
+		return []byte(config.C.Jwt.Secret), nil
 	})
 	if err != nil {
 		log.Println("token parse err: ", err)

@@ -2,6 +2,7 @@
 node_modules
 /public
 deploy_source.sh
+/bin
 
 
 # local env files

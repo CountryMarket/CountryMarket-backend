@@ -2,11 +2,11 @@ package model
 
 import (
 	"fmt"
+	"github.com/CountryMarket/CountryMarket-backend/config"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
 	"log"
-	"os"
 	"time"
 )
 
@@ -72,10 +72,10 @@ type model struct {
 
 func init() {
 	source := "%s:%s@tcp(%s)/%s?readTimeout=1500ms&writeTimeout=1500ms&charset=utf8&loc=Local&&parseTime=true"
-	user := os.Getenv("MYSQL_USERNAME")
-	pwd := os.Getenv("MYSQL_PASSWORD")
-	addr := os.Getenv("MYSQL_ADDRESS")
-	dataBase := os.Getenv("MYSQL_DATABASE")
+	user := config.C.MySQL.Username
+	pwd := config.C.MySQL.Password
+	addr := config.C.MySQL.Addr
+	dataBase := config.C.MySQL.Db
 	source = fmt.Sprintf(source, user, pwd, addr, dataBase)
 	log.Println("start init MySQL with ", source)
 

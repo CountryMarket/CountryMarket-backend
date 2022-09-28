@@ -3,13 +3,13 @@ package controller
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/CountryMarket/CountryMarket-backend/config"
 	"github.com/CountryMarket/CountryMarket-backend/controller/param"
 	"github.com/CountryMarket/CountryMarket-backend/model"
 	"github.com/CountryMarket/CountryMarket-backend/util"
 	"github.com/CountryMarket/CountryMarket-backend/util/response"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"os"
 )
 
 type getLogin struct {
@@ -35,8 +35,8 @@ func UserLogin(ctx *gin.Context) {
 
 	// 获取 OpenId
 	p := getLogin{
-		os.Getenv("APPID"),
-		os.Getenv("APPSECRET"),
+		config.C.App.Appid,
+		config.C.App.AppSecret,
 		req.Code,
 		"authorization_code",
 	}
