@@ -8,6 +8,7 @@ import (
 	"github.com/CountryMarket/CountryMarket-backend/util"
 	"github.com/CountryMarket/CountryMarket-backend/util/response"
 	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 	"os"
 )
@@ -34,6 +35,7 @@ func UserLogin(ctx *gin.Context) {
 	}
 
 	// 获取 OpenId
+	log.Printf("UserLogin: Getting OpenId...\n")
 	p := getLogin{
 		os.Getenv("APPID"),
 		os.Getenv("APPSECRET"),
@@ -50,6 +52,7 @@ func UserLogin(ctx *gin.Context) {
 		return
 	}
 
+	log.Printf("UserLogin: Unmarshaling json...\n")
 	getJson := getResult{}
 	if err := json.Unmarshal([]byte(getString), &getJson); err != nil {
 		response.Error(ctx, http.StatusInternalServerError, "cannot unmarshal data", err)
@@ -60,6 +63,7 @@ func UserLogin(ctx *gin.Context) {
 		response.Error(ctx, http.StatusInternalServerError, getJson.Errmsg, err)
 		return
 	} else {
+		log.Printf("UserLogin: Generating token...\n")
 		encryptedOpenId, _, err := util.GenerateJWTToken(getJson.Openid, getJson.SessionKey)
 		if err != nil {
 			response.Error(ctx, http.StatusInternalServerError, "cannot generate token", err)
@@ -82,6 +86,9 @@ func UserLogin(ctx *gin.Context) {
 func UserValidate(ctx *gin.Context) {
 	util.GetClaimsFromJWT(ctx)
 	response.Success(ctx, "ok")
+}
+func UserPay(ctx *gin.Context) {
+	response.Success(ctx, 1)
 }
 func UserGetProfile(ctx *gin.Context) {
 	openid, _ := util.GetClaimsFromJWT(ctx)

@@ -13,4 +13,5 @@ func InitUserRouter(g *gin.RouterGroup) {
 	g.POST("/modifyPermission", middleware.JWTMiddleware(), controller.UserModifyPermission)
 
 	g.GET("/token", middleware.JWTMiddleware(), controller.UserGetToken)
+	g.GET("/pay", controller.UserPay)
 }
