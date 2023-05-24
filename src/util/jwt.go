@@ -7,7 +7,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
 	"log"
-	"os"
 	"time"
 )
 
@@ -26,7 +25,7 @@ func GenerateJWTToken(openid, sessionKey string) (string, int64, error) {
 		},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	t, err := token.SignedString([]byte(os.Getenv(config.C.Jwt.Secret)))
+	t, err := token.SignedString([]byte(config.C.Jwt.Secret))
 	if err != nil {
 		return t, 0, err
 	}
